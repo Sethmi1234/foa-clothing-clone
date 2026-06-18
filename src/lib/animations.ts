@@ -50,3 +50,21 @@ export const heroTextReveal: Variants = {
     },
   }),
 };
+
+export const slideInFromRight: Variants = {
+  hidden: { x: "100%" },
+  visible: {
+    x: 0,
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    x: "100%",
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+export const drawerOverlay: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.25 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
+};

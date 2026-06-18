@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { HeartIcon } from "@/components/icons/HeartIcon";
+import { useCart } from "@/context/CartContext";
+import WishlistButton from "@/components/wishlist/WishlistButton";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import type { Product } from "@/types";
 
@@ -14,9 +15,24 @@ const sizeOrder = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 export default function ProductInfo({ product }: ProductInfoProps) {
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const { addItem } = useCart();
 
   const activeColor = product.colors?.[selectedColor];
   const installmentPrice = product.price / 3;
+  const colorLabel =
+    activeColor?.hex === "#ffffff"
+      ? "White"
+      : activeColor?.hex === "#1a1a1a"
+        ? "Black"
+        : activeColor?.hex === "#1a2744"
+          ? "Navy"
+          : activeColor?.hex === "#2c3e50"
+            ? "Blue"
+            : activeColor?.hex === "#3d3d3d"
+              ? "Dark Grey"
+              : activeColor
+                ? "Multi"
+                : undefined;
 
   return (
     <div className="flex flex-col gap-6">
@@ -86,7 +102,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       {product.colors && product.colors.length > 0 && (
         <div className="flex flex-col gap-3">
           <span className="text-[13px] font-bold uppercase tracking-[0.06em] text-black">
-            Color: <span className="font-normal normal-case tracking-normal text-neutral-600">{activeColor?.hex === "#ffffff" ? "White" : activeColor?.hex === "#1a1a1a" ? "Black" : activeColor?.hex === "#1a2744" ? "Navy" : activeColor?.hex === "#2c3e50" ? "Blue" : activeColor?.hex === "#3d3d3d" ? "Dark Grey" : "Multi"}</span>
+            Color:{" "}
+            <span className="font-normal normal-case tracking-normal text-neutral-600">
+              {colorLabel}
+            </span>
           </span>
           <div className="flex items-center gap-2">
             {product.colors.map((color, index) => {
@@ -125,19 +144,24 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       {/* Add to Cart Button */}
       <button
         type="button"
+        onClick={() =>
+          addItem({
+            productId: product.id,
+            name: product.name,
+            image: activeColor?.image ?? product.image,
+            price: product.price,
+            href: product.href,
+            size: selectedSize ?? undefined,
+            color: colorLabel,
+            quantity: 1,
+          })
+        }
         className="h-[52px] w-full rounded-full bg-black text-[14px] font-bold uppercase tracking-[0.06em] text-white transition-colors hover:bg-neutral-800"
       >
         Add to Cart — Rs {product.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </button>
 
-      {/* Wishlist */}
-      <button
-        type="button"
-        className="flex items-center justify-center gap-2 text-[12px] font-bold uppercase tracking-[0.04em] text-black hover:opacity-70"
-      >
-        <HeartIcon />
-        Add to Wishlist
-      </button>
+      <WishlistButton productId={product.id} productName={product.name} variant="page" />
 
       {/* Description */}
       {product.description && (

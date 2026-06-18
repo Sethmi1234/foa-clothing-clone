@@ -1,10 +1,15 @@
-export function HeartIcon({ className = "" }: { className?: string }) {
+type HeartIconProps = {
+  className?: string;
+  filled?: boolean;
+};
+
+export function HeartIcon({ className = "", filled = false }: HeartIconProps) {
   return (
     <svg
       width="18"
       height="16"
       viewBox="0 0 18 16"
-      fill="none"
+      fill={filled ? "currentColor" : "none"}
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       aria-hidden="true"

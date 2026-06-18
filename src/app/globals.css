@@ -66,3 +66,79 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Login / Register form styles (FOA theme) */
+.thb-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.thb-field {
+  position: relative;
+}
+
+.thb-field-input {
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  padding: 1.125rem 1rem 0.625rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: #151515;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.thb-field-input:focus {
+  border-color: #151515;
+}
+
+.thb-field-label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9375rem;
+  color: #8e8e8e;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.thb-field-input:focus + .thb-field-label,
+.thb-field-input:not(:placeholder-shown) + .thb-field-label {
+  top: 0.55rem;
+  transform: translateY(0);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+}
+
+.thb-button-full {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #151515;
+  background: #151515;
+  color: #fff;
+  padding: 0.95rem 1.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: opacity 0.2s ease;
+}
+
+.thb-button-full:hover {
+  opacity: 0.85;
+}
+
+.thb-text-button {
+  display: inline;
+  color: #151515;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.thb-text-button:hover {
+  opacity: 0.7;
+}

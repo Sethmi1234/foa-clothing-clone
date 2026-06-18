@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import PriceDisplay from "@/components/ui/PriceDisplay";
+import { eVoucherDenominations } from "@/data/eVoucher";
 import { shopImage } from "@/lib/images";
 
 const thumbnail = shopImage("FOAblack-logo.png?v=1684393386", 120);
 
 export default function EVoucherStickyBar() {
+  const [selectedDenom, setSelectedDenom] = useState(eVoucherDenominations[0]);
+
   return (
     <div className="fixed bottom-5 right-5 z-40 hidden w-[340px] border border-neutral-200 bg-white p-4 shadow-lg md:block">
       <div className="flex items-center gap-3">
@@ -15,9 +19,9 @@ export default function EVoucherStickyBar() {
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-[12px] font-bold uppercase text-black">E - VOUCHER</p>
-          <p className="text-[14px] font-bold text-black"><PriceDisplay amount={1000} /></p>
+          <p className="text-[14px] font-bold text-black"><PriceDisplay amount={selectedDenom.amount} /></p>
           <p className="truncate text-[10px] text-[#8e8e8e]">
-            3 X <PriceDisplay amount={1000} installment /> with Mintpay
+            3 X <PriceDisplay amount={selectedDenom.amount} installment /> with Mintpay
           </p>
         </div>
         <button

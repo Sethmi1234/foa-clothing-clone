@@ -55,7 +55,7 @@ export default function MegaMenu({ category, isOpen, forceSolid = false }: MegaM
                         <li key={item.id}>
                           <Link
                             href={item.url ?? "#"}
-                            className="text-[12px] uppercase tracking-[0.03em] text-neutral-600 transition-colors hover:text-black"
+                            className="text-[13px] uppercase tracking-[0.03em] text-neutral-600 transition-colors hover:text-black"
                           >
                             {item.label}
                           </Link>

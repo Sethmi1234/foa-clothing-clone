@@ -4,12 +4,14 @@ import { useState } from "react";
 import { HeartIcon } from "@/components/icons/HeartIcon";
 import Accordion from "@/components/shared/Accordion";
 import { eVoucherDenominations, eVoucherDescription } from "@/data/eVoucher";
+import { useCart } from "@/context/CartContext";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 
 export default function EVoucherDetails() {
   const [selectedDenom, setSelectedDenom] = useState(eVoucherDenominations[0]);
   const [quantity, setQuantity] = useState(1);
   const [isGift, setIsGift] = useState(false);
+  const { addItem } = useCart();
 
   return (
     <div className="flex flex-col">
@@ -108,6 +110,16 @@ export default function EVoucherDetails() {
 
       <button
         type="button"
+        onClick={() =>
+          addItem({
+            productId: `e-voucher-${selectedDenom.amount}`,
+            name: "E - VOUCHER",
+            image: "https://foaclothing.com/cdn/shop/files/FOA_Logos-03.png?v=1684393386&width=301",
+            price: selectedDenom.amount,
+            href: "/collections/e-voucher",
+            quantity,
+          })
+        }
         className="mb-3 h-[52px] w-full rounded-full border border-black bg-white text-[13px] font-bold uppercase tracking-[0.06em] text-black transition-colors hover:bg-neutral-50"
       >
         Add to Cart

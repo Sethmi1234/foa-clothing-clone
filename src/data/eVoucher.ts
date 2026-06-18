@@ -1,49 +1,28 @@
-export const eVoucherDenominations = [
-  { id: "denom-1000", label: "Rs 1,000.00", amount: 1000 },
-  { id: "denom-5000", label: "Rs 5,000.00", amount: 5000 },
-  { id: "denom-10000", label: "Rs 10,000.00", amount: 10000 },
-  { id: "denom-15000", label: "Rs 15,000.00", amount: 15000 },
-  { id: "denom-20000", label: "Rs 20,000.00", amount: 20000 },
+export type EVoucherDenomination = {
+  id: string;
+  amount: number;
+  label: string;
+};
+
+export const eVoucherDenominations: EVoucherDenomination[] = [
+  { id: "1000", amount: 1000, label: "Rs 1,000" },
+  { id: "2000", amount: 2000, label: "Rs 2,000" },
+  { id: "3000", amount: 3000, label: "Rs 3,000" },
+  { id: "5000", amount: 5000, label: "Rs 5,000" },
+  { id: "10000", amount: 10000, label: "Rs 10,000" },
+  { id: "15000", amount: 15000, label: "Rs 15,000" },
+  { id: "20000", amount: 20000, label: "Rs 20,000" },
+  { id: "25000", amount: 25000, label: "Rs 25,000" },
 ];
 
-export const eVoucherDescription =
-  "Give the gift of choice with an FOA E-Gift Card. Delivered by email, our digital gift cards can be redeemed online at foaclothing.com for any product. Perfect for birthdays, holidays, or any special occasion.";
+export const eVoucherDescription = `
+This E-Gift Card is valid for use only on the foaclothing.com website only and is not allowed to be used at any of the FOA physical in-store locations.
 
-export const faqItems = [
-  {
-    id: "faq-payment",
-    question: "WHAT PAYMENT METHODS CAN I USE?",
-    answer:
-      "We accept Visa, Mastercard, American Express, Apple Pay, Google Pay, Mintpay, and Koko for online purchases.",
-  },
-  {
-    id: "faq-currency",
-    question: "CAN I PURCHASE ITEMS WITH ANOTHER CURRENCY?",
-    answer:
-      "Yes. You can browse and checkout in LKR. Currency conversion is handled at checkout based on your payment provider.",
-  },
-  {
-    id: "faq-changes",
-    question: "CAN I MAKE CHANGES TO MY ORDER AFTER IT HAS BEEN PLACED?",
-    answer:
-      "Please contact our support team as soon as possible if you need to modify your order. Changes may not be possible once processing has begun.",
-  },
-  {
-    id: "faq-international",
-    question: "DO YOU OFFER E-GIFT CARDS FOR INTERNATIONAL CUSTOMERS?",
-    answer:
-      "E-Gift Cards are available for purchase online and can be redeemed on foaclothing.com.",
-  },
-  {
-    id: "faq-subscription",
-    question: "HOW DO I SET UP A SUBSCRIPTION ORDER?",
-    answer:
-      "Subscription ordering is not currently available. Please check back for updates or contact support for assistance.",
-  },
-  {
-    id: "faq-returns",
-    question: "HOW DO I RETURN MY ITEMS?",
-    answer:
-      "Please refer to our Return and Exchange Policy page for full details on eligible returns and the return process.",
-  },
-];
+E-Gift Cards must be paid upfront through Credit or Debit Cards. Cash on Delivery is not available for E-Gift Cards.
+
+Your E-Gift Card will be emailed to you as soon as your payment is confirmed. The email will contain your unique E-Gift Card code and instructions on how to redeem it.
+
+E-Gift Cards are valid for 12 months from the date of purchase and cannot be refunded or exchanged for cash.
+
+Please ensure you provide the correct email address at checkout, as the E-Gift Card will be sent to that email address.
+`;

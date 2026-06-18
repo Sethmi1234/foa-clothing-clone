@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { HeartIcon } from "@/components/icons/HeartIcon";
+import { useCart } from "@/context/CartContext";
+import WishlistButton from "@/components/wishlist/WishlistButton";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import type { Product } from "@/types";
 
@@ -14,6 +15,7 @@ type CollectionProductCardProps = {
 export default function CollectionProductCard({ product }: CollectionProductCardProps) {
   const [selectedColor, setSelectedColor] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const { addItem } = useCart();
 
   const activeColor = product.colors?.[selectedColor];
   const displayImage = activeColor?.image ?? product.image;
@@ -64,15 +66,12 @@ export default function CollectionProductCard({ product }: CollectionProductCard
           </span>
         )}
 
-        <button
-          type="button"
-          className={`absolute right-3 z-10 text-neutral-300 transition-colors hover:text-neutral-500 ${
-            product.onSale ? "top-14" : "top-3"
-          }`}
-          aria-label="Add to wishlist"
-        >
-          <HeartIcon />
-        </button>
+        <WishlistButton
+          productId={product.id}
+          productName={product.name}
+          variant="card"
+          className={`absolute right-3 z-10 ${product.onSale ? "top-14" : "top-3"}`}
+        />
 
         {/* Quick View overlay on hover */}
         <div
@@ -146,6 +145,16 @@ export default function CollectionProductCard({ product }: CollectionProductCard
 
         <button
           type="button"
+          onClick={() =>
+            addItem({
+              productId: product.id,
+              name: product.name,
+              image: displayImage,
+              price: product.price,
+              href: product.href,
+              quantity: 1,
+            })
+          }
           className="mt-3 h-[48px] w-full rounded-full bg-black text-[13px] font-bold uppercase tracking-[0.06em] text-white transition-colors hover:bg-neutral-800"
         >
           Add to Cart

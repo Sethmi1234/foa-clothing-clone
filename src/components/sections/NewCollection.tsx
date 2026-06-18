@@ -4,10 +4,15 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import ProductCard from "@/components/ui/ProductCard";
-import { newCollectionProducts } from "@/data/mockData";
+import { allProducts } from "@/data/collections";
 import { staggerContainer } from "@/lib/animations";
 
 export default function NewCollection() {
+  const newCollectionProducts = allProducts.filter((p) =>
+    p.collections && Array.isArray(p.collections) && p.collections.includes("new")
+  );
+  const products = newCollectionProducts.slice(0, 4);
+
   return (
     <section className="pb-12 md:pb-16">
       <Container className="max-w-none px-6 md:px-[62px]">
@@ -38,7 +43,7 @@ export default function NewCollection() {
           viewport={{ once: true, margin: "-50px" }}
           className="hide-scrollbar grid grid-cols-2 gap-6 overflow-hidden md:grid-cols-4 md:gap-14"
         >
-          {newCollectionProducts.slice(0, 4).map((product) => (
+          {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </motion.div>
