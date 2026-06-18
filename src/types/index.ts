@@ -13,6 +13,7 @@ export type ProductColor = {
   hex: string;
   image: string;
   hoverImage?: string;
+  images?: string[];
   soldOut?: boolean;
 };
 
@@ -23,11 +24,32 @@ export type Product = {
   compareAtPrice?: number;
   image: string;
   hoverImage?: string;
+  images?: string[];
   href: string;
   colors?: ProductColor[];
+  sizes?: string[];
   category: string;
+  collections: string[];
   onSale?: boolean;
   saleLabel?: string;
+  description?: string;
+  material?: string;
+};
+
+export type CollectionMeta = {
+  slug: string;
+  title: string;
+  displayTitle: string;
+  heroImage?: string;
+  heroOverlay?: string;
+  showHero: boolean;
+};
+
+export type OtherCollectionGroup = {
+  id: string;
+  label: string;
+  href: string;
+  image: string;
 };
 
 export type CategoryItem = {

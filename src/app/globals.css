@@ -4,6 +4,13 @@
   --color-foa-black: #151515;
   --color-foa-red: #e00000;
   --color-foa-gray: #8e8e8e;
+  --color-foa-gray-light: #E2E2E2;
+  --color-foa-border: #E2E2E2;
+  --color-foa-footer-bg: #151515;
+  --color-foa-footer-text: #FFFFFF;
+  --color-foa-footer-border: #444444;
+  --color-foa-announcement-bg: #151515;
+  --color-foa-announcement-text: #ffffff;
   --font-prompt: "Prompt", sans-serif;
 }
 

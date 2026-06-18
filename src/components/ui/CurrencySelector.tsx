@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@/components/icons/ChevronDownIcon";
 import { currencies } from "@/data/currencies";
+import { useCurrency } from "@/context/CurrencyContext";
 
 type CurrencySelectorProps = {
   variant?: "floating" | "footer";
@@ -10,7 +11,7 @@ type CurrencySelectorProps = {
 
 export default function CurrencySelector({ variant = "floating" }: CurrencySelectorProps) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(currencies[0]);
+  const { currency: selected, setCurrency: setSelected } = useCurrency();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

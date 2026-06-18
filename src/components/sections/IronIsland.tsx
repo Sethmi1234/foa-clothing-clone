@@ -16,7 +16,7 @@ export default function IronIsland() {
         className="object-cover"
         sizes="100vw"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/60" />
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-white">
         <motion.p
@@ -25,7 +25,7 @@ export default function IronIsland() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mb-3 text-xs font-medium uppercase tracking-[0.2em]"
+          className="mb-4 text-xs font-medium uppercase tracking-[0.2em]"
         >
           {ironIslandData.subheading}
         </motion.p>

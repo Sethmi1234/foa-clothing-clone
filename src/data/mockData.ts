@@ -5,6 +5,7 @@ import type {
   HeroSlide,
   Product,
 } from "@/types";
+import { allProducts } from "@/data/collections";
 import { shopImage } from "@/lib/images";
 
 export const announcementMessages = [
@@ -45,60 +46,15 @@ export const heroSlides: HeroSlide[] = [
   },
 ];
 
-export const newCollectionProducts: Product[] = [
-  {
-    id: "neo-utility-short",
-    name: "Neo Utility Short",
-    price: 4500,
-    image: shopImage("00012701A.jpg?v=1778250510"),
-    hoverImage: shopImage("00012701B.jpg?v=1778250510"),
-    href: "/products/neo-utility-short",
-    category: "new",
-    colors: [
-      { hex: "#1a2744", image: shopImage("00012701A.jpg?v=1778250510"), hoverImage: shopImage("00012701B.jpg?v=1778250510") },
-      { hex: "#2d2d2d", image: shopImage("00012702A.jpg?v=1778250511"), hoverImage: shopImage("00012701B.jpg?v=1778250510") },
-    ],
-  },
-  {
-    id: "flux-jogger",
-    name: "Flux Jogger",
-    price: 4800,
-    image: shopImage("00012601A.jpg?v=1778249513"),
-    hoverImage: shopImage("00012601B.jpg?v=1778249512"),
-    href: "/products/flux-jogger",
-    category: "new",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("00012601A.jpg?v=1778249513"), hoverImage: shopImage("00012601B.jpg?v=1778249512") },
-      { hex: "#2c3e50", image: shopImage("00012601C.jpg?v=1778249513"), hoverImage: shopImage("00012601B.jpg?v=1778249512") },
-    ],
-  },
-  {
-    id: "flux-oversize-tee",
-    name: "Flux Oversize Tee",
-    price: 4800,
-    image: shopImage("00012501A.jpg?v=1778247075"),
-    hoverImage: shopImage("00012501B.jpg?v=1778247075"),
-    href: "/products/flux-oversize-tee",
-    category: "new",
-    colors: [
-      { hex: "#1a2744", image: shopImage("00012501A.jpg?v=1778247075"), hoverImage: shopImage("00012501B.jpg?v=1778247075") },
-      { hex: "#1a1a1a", image: shopImage("00012501C.jpg?v=1778247075"), hoverImage: shopImage("00012501B.jpg?v=1778247075") },
-    ],
-  },
-  {
-    id: "aero-tank-top",
-    name: "Aero Tank Top",
-    price: 2800,
-    image: shopImage("00012401A.jpg?v=1778242184"),
-    hoverImage: shopImage("00012401B.jpg?v=1778242184"),
-    href: "/products/aero-tank-top",
-    category: "new",
-    colors: [
-      { hex: "#3d3d3d", image: shopImage("00012401A.jpg?v=1778242184"), hoverImage: shopImage("00012401B.jpg?v=1778242184") },
-      { hex: "#1a1a1a", image: shopImage("00012401C.jpg?v=1778242184"), hoverImage: shopImage("00012401B.jpg?v=1778242184") },
-    ],
-  },
-];
+export const newCollectionProducts: Product[] = allProducts.filter((p) =>
+  p.collections.includes("new")
+);
+
+export const bestSellerProducts: Product[] = allProducts.filter((p) =>
+  ["tees", "denim", "bags", "accessories"].includes(p.category)
+);
+
+export const bestSellerTabs = ["Tees", "Denim", "Bags", "Accessories"] as const;
 
 export const categoryItems: CategoryItem[] = [
   {
@@ -145,160 +101,6 @@ export const collectionShowcase: CollectionItem[] = [
     href: "/collections/core-24-7",
     image: shopImage("core_247.png?v=1761217192", 1920),
     outlined: true,
-  },
-];
-
-export const bestSellerTabs = ["Tees", "Denim", "Bags", "Accessories"] as const;
-
-export const bestSellerProducts: Product[] = [
-  {
-    id: "flux-oversize-tee-bs",
-    name: "Flux Oversize Tee",
-    price: 4800,
-    image: shopImage("00012501A.jpg?v=1778247075"),
-    hoverImage: shopImage("00012501B.jpg?v=1778247075"),
-    href: "/products/flux-oversize-tee",
-    category: "tees",
-    colors: [
-      { hex: "#1a2744", image: shopImage("00012501A.jpg?v=1778247075"), hoverImage: shopImage("00012501B.jpg?v=1778247075") },
-      { hex: "#1a1a1a", image: shopImage("00012501C.jpg?v=1778247075"), hoverImage: shopImage("00012501B.jpg?v=1778247075") },
-    ],
-  },
-  {
-    id: "dead-rules-tee",
-    name: "Dead Rules Tee",
-    price: 5200,
-    image: shopImage("60014301A.jpg?v=1774438598"),
-    hoverImage: shopImage("60014302A.jpg?v=1774439477"),
-    href: "/products/dead-rules-tee",
-    category: "tees",
-    colors: [
-      { hex: "#1a2744", image: shopImage("60014301A.jpg?v=1774438598"), hoverImage: shopImage("60014302A.jpg?v=1774439477") },
-      { hex: "#1a1a1a", image: shopImage("60014303A.jpg?v=1774439477"), hoverImage: shopImage("60014302A.jpg?v=1774439477") },
-    ],
-  },
-  {
-    id: "unchained-tee",
-    name: "Unchained Tee",
-    price: 5200,
-    image: shopImage("60014201A.jpg?v=1772541413"),
-    hoverImage: shopImage("60014202A.jpg?v=1772612995"),
-    href: "/products/unchained-tee",
-    category: "tees",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("60014201A.jpg?v=1772541413"), hoverImage: shopImage("60014202A.jpg?v=1772612995") },
-    ],
-  },
-  {
-    id: "linear-tee",
-    name: "Linear Tee",
-    price: 4500,
-    image: shopImage("00012301A.jpg?v=1770036513"),
-    hoverImage: shopImage("00012301B.jpg?v=1770036513"),
-    href: "/products/linear-tee",
-    category: "tees",
-    colors: [
-      { hex: "#2c2c2c", image: shopImage("00012301A.jpg?v=1770036513"), hoverImage: shopImage("00012301B.jpg?v=1770036513") },
-    ],
-  },
-  {
-    id: "lycus-henley-tee",
-    name: "Lycus Henley Tee",
-    price: 2500,
-    compareAtPrice: 5000,
-    image: shopImage("10002101A.jpg?v=1754042692"),
-    hoverImage: shopImage("10002102A.jpg?v=1754042692"),
-    href: "/products/lycus-henley-tee",
-    category: "tees",
-    onSale: true,
-    saleLabel: "50% OFF",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("10002101A.jpg?v=1754042692"), hoverImage: shopImage("10002102A.jpg?v=1754042692") },
-    ],
-  },
-  {
-    id: "loose-flared-jeans",
-    name: "Loose Flared Jeans",
-    price: 7500,
-    image: shopImage("00011801A.jpg?v=1761150100"),
-    hoverImage: shopImage("00011803A.jpg?v=1761214526"),
-    href: "/products/loose-flared-jeans",
-    category: "denim",
-    colors: [
-      { hex: "#1a2744", image: shopImage("00011801A.jpg?v=1761150100"), hoverImage: shopImage("00011803A.jpg?v=1761214526") },
-    ],
-  },
-  {
-    id: "carpenter-jeans",
-    name: "Carpenter Jeans",
-    price: 7500,
-    image: shopImage("00011501A.jpg?v=1761146073"),
-    hoverImage: shopImage("00011501B.jpg?v=1761214447"),
-    href: "/products/carpenter-jeans",
-    category: "denim",
-    colors: [
-      { hex: "#2c3e50", image: shopImage("00011501A.jpg?v=1761146073"), hoverImage: shopImage("00011501B.jpg?v=1761214447") },
-    ],
-  },
-  {
-    id: "essential-tote-bag",
-    name: "Essential Tote Bag",
-    price: 3000,
-    image: shopImage("60013801A.jpg?v=1769681924"),
-    href: "/products/essential-tote-bag",
-    category: "bags",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("60013801A.jpg?v=1769681924") },
-    ],
-  },
-  {
-    id: "crossbody-bag",
-    name: "Crossbody Bag 2.0",
-    price: 2450,
-    compareAtPrice: 3500,
-    image: shopImage("60009300A.jpg?v=1754042961"),
-    hoverImage: shopImage("60009301A.jpg?v=1754042961"),
-    href: "/products/crossbody-bag-2-0",
-    category: "bags",
-    onSale: true,
-    saleLabel: "50% OFF",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("60009300A.jpg?v=1754042961"), hoverImage: shopImage("60009301A.jpg?v=1754042961") },
-    ],
-  },
-  {
-    id: "foa-tote-bag",
-    name: "F.O.A Tote Bag",
-    price: 2500,
-    image: shopImage("60009201A.jpg?v=1754042800"),
-    href: "/products/foa-tote-bag",
-    category: "bags",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("60009201A.jpg?v=1754042800") },
-    ],
-  },
-  {
-    id: "foa-hydrojug",
-    name: "F.O.A Hydrojug 1L",
-    price: 4500,
-    image: shopImage("60009101A.jpg?v=1754042600"),
-    href: "/products/foa-hydrojug-1l",
-    category: "accessories",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("60009101A.jpg?v=1754042600") },
-    ],
-  },
-  {
-    id: "foa-boxer-briefs",
-    name: "F.O.A BOXER BRIEFS",
-    price: 1500,
-    image: shopImage("60009001A.jpg?v=1754042400"),
-    href: "/products/foa-boxer-briefs",
-    category: "accessories",
-    colors: [
-      { hex: "#1a1a1a", image: shopImage("60009001A.jpg?v=1754042400") },
-      { hex: "#2c2c2c", image: shopImage("60009001A.jpg?v=1754042400") },
-    ],
   },
 ];
 

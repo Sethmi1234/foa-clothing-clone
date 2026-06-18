@@ -4,6 +4,7 @@ import FloatingActions from "@/components/layout/FloatingActions";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import MainContent from "@/components/layout/MainContent";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 
 const prompt = Prompt({
   subsets: ["latin"],
@@ -25,10 +26,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${prompt.variable} font-[family-name:var(--font-prompt)] antialiased`}>
-        <Header />
-        <MainContent>{children}</MainContent>
-        <Footer />
-        <FloatingActions />
+        <CurrencyProvider>
+          <Header />
+          <MainContent>{children}</MainContent>
+          <Footer />
+          <FloatingActions />
+        </CurrencyProvider>
       </body>
     </html>
   );

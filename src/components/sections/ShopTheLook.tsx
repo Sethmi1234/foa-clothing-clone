@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { shopTheLookImage } from "@/data/mockData";
 import { fadeIn } from "@/lib/animations";
 

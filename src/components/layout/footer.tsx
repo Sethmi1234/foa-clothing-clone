@@ -19,7 +19,7 @@ import {
 } from "@/components/icons/PaymentIcons";
 import { footerData } from "@/data/mockData";
 
-const socialIconMap: Record<string, React.ComponentType> = {
+const socialIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Facebook: FacebookIcon,
   Instagram: InstagramIcon,
   YouTube: YouTubeIcon,
@@ -115,7 +115,7 @@ export default function Footer() {
                 <li key={link.id}>
                   <Link
                     href={link.href}
-                    className="text-[14px] text-white/70 transition-colors hover:text-white"
+                    className="text-[13px] text-white/70 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -131,7 +131,7 @@ export default function Footer() {
                 <li key={link.id}>
                   <Link
                     href={link.href}
-                    className="text-[14px] text-white/70 transition-colors hover:text-white"
+                    className="text-[13px] text-white/70 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>

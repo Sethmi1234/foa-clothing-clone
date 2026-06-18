@@ -50,7 +50,7 @@ export default function HeroSlideshow() {
             className="object-cover object-center md:hidden"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
         </motion.div>
       ))}
 
@@ -87,6 +87,7 @@ export default function HeroSlideshow() {
         </AnimatePresence>
       </div>
 
+      {/* Dots navigation */}
       <div className="absolute bottom-9 left-1/2 z-10 flex -translate-x-1/2 gap-3">
         {heroSlides.map((_, index) => (
           <button

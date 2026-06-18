@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { HeartIcon } from "@/components/icons/HeartIcon";
-import { formatPrice, installmentPrice } from "@/data/mockData";
+import PriceDisplay from "@/components/ui/PriceDisplay";
 import { fadeIn } from "@/lib/animations";
 import type { Product } from "@/types";
 
@@ -23,6 +23,15 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
   const displayHover = activeColor?.hoverImage ?? product.hoverImage;
   const hasColorVariants = Boolean(product.colors && product.colors.length > 0);
   const showHoverImage = isHovered && displayHover && displayHover !== displayImage;
+
+  const salePriceFormatted = product.price.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const installmentPrice = (product.price / 3).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   return (
     <motion.article
@@ -68,10 +77,21 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
         </button>
 
         {product.onSale && product.saleLabel && (
-          <span className="absolute right-0 top-8 bg-black px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+          <span className="absolute left-0 top-3 bg-black px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
             {product.saleLabel}
           </span>
         )}
+
+        {/* Quick View overlay on hover */}
+        <div
+          className={`absolute bottom-0 left-0 right-0 flex h-[52px] items-center justify-center bg-black/90 transition-transform duration-300 ${
+            isHovered ? "translate-y-0" : "translate-y-full"
+          }`}
+        >
+          <span className="text-[13px] font-bold uppercase tracking-[0.06em] text-white">
+            Quick View
+          </span>
+        </div>
       </div>
 
       {showDetails && (
@@ -86,18 +106,18 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
           <div className="flex items-center gap-2 text-[17px] font-bold leading-tight">
             {product.compareAtPrice && (
               <span className="font-normal text-neutral-400 line-through">
-                {formatPrice(product.compareAtPrice)}
+                Rs {product.compareAtPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             )}
-            <span>{formatPrice(product.price)}</span>
+            <span>Rs {salePriceFormatted}</span>
           </div>
 
           <p className="text-[13px] leading-relaxed text-[#8e8e8e]">
-            3 X <strong className="font-semibold text-[#8e8e8e]">{installmentPrice(product.price)}</strong> or{" "}
+            3 X <strong className="font-semibold text-[#8e8e8e]">Rs {installmentPrice}</strong> or{" "}
             <strong className="font-semibold text-[#8e8e8e]">4.5% Cashback</strong> with Mintpay
           </p>
           <p className="text-[13px] leading-relaxed text-[#8e8e8e]">
-            or pay in 3 x <strong className="font-semibold text-[#8e8e8e]">{installmentPrice(product.price)}</strong> with Koko
+            or pay in 3 x <strong className="font-semibold text-[#8e8e8e]">Rs {installmentPrice}</strong> with Koko
           </p>
 
           {hasColorVariants && (
