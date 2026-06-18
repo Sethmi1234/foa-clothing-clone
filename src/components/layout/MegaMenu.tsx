@@ -24,10 +24,10 @@ export default function MegaMenu({ category, isOpen, forceSolid = false }: MegaM
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -8 }}
+          initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+          exit={{ opacity: 0, y: -4 }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
           className={`absolute left-0 right-0 top-full z-50 border-t border-neutral-200 shadow-lg ${
             forceSolid ? "bg-white" : "bg-white/95 backdrop-blur-[1px]"
           }`}
@@ -40,22 +40,22 @@ export default function MegaMenu({ category, isOpen, forceSolid = false }: MegaM
                   {column.url ? (
                     <Link
                       href={column.url}
-                      className="mb-3 block text-[13px] font-medium uppercase tracking-[0.04em] text-black hover:opacity-70"
+                      className="mb-3 block text-[13px] font-semibold uppercase tracking-[0.04em] text-black transition-opacity hover:opacity-60"
                     >
                       {column.title}
                     </Link>
                   ) : (
-                    <p className="mb-3 text-[13px] font-medium uppercase tracking-[0.04em] text-black">
+                    <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.04em] text-black">
                       {column.title}
                     </p>
                   )}
                   {column.items.length > 0 && (
-                    <ul className="space-y-1.5">
+                    <ul className="mt-2 space-y-1.5">
                       {column.items.map((item) => (
                         <li key={item.id}>
                           <Link
                             href={item.url ?? "#"}
-                            className="text-[12px] uppercase tracking-[0.03em] text-neutral-800 transition-colors hover:text-black"
+                            className="text-[12px] uppercase tracking-[0.03em] text-neutral-600 transition-colors hover:text-black"
                           >
                             {item.label}
                           </Link>

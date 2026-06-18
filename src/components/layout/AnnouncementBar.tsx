@@ -44,7 +44,7 @@ export default function AnnouncementBar({ scrolled = false }: AnnouncementBarPro
                 {items.map((message, index) => (
                   <span
                     key={`${group}-${index}`}
-                    className="px-8 py-2.5 text-[10px] font-medium uppercase tracking-[0.08em]"
+                    className="px-8 py-2.5 text-[11px] font-medium uppercase tracking-[0.08em] leading-[1.6]"
                   >
                     {message}
                   </span>

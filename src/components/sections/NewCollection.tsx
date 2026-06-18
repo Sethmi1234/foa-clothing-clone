@@ -38,7 +38,7 @@ export default function NewCollection() {
           viewport={{ once: true, margin: "-50px" }}
           className="hide-scrollbar grid grid-cols-2 gap-6 overflow-hidden md:grid-cols-4 md:gap-14"
         >
-          {newCollectionProducts.map((product) => (
+          {newCollectionProducts.slice(0, 4).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </motion.div>

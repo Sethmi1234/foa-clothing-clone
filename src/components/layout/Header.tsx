@@ -17,12 +17,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const showSolidHeader = scrolled || !isHome;
+  const showSolidAnnouncement = scrolled;
+  const showSolidNav = scrolled || !isHome;
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
-      <AnnouncementBar scrolled={showSolidHeader} />
-      <Navbar transparent={isHome} scrolled={showSolidHeader} />
+      <AnnouncementBar scrolled={showSolidAnnouncement} />
+      <Navbar transparent={isHome} scrolled={showSolidNav} />
     </div>
   );
 }

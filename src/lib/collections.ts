@@ -1,4 +1,6 @@
+import { collectionMeta, otherCollections } from "@/data/collections";
 import { navigationData } from "@/data/navigation";
+import type { CollectionMeta } from "@/types";
 
 const slugLabels: Record<string, string> = {
   men: "MENS",
@@ -26,21 +28,20 @@ const slugLabels: Record<string, string> = {
   hats: "HATS",
   caps: "CAPS",
   socks: "SOCKS",
-  "womens-tees": "WOMENS TEES",
-  "printed-tees-women": "PRINTED TEES",
-  "womens-jackets": "JACKETS",
-  tops: "TOPS",
-  "womens-tanks": "TANKS",
-  "womens-hoodies": "HOODIES",
   dresses: "DRESSES",
   leggings: "LEGGINGS",
-  "womens-shorts": "SHORTS",
-  "womens-jeans": "JEANS",
   skirts: "SKIRTS",
-  "womens-pants": "PANTS",
+  tops: "TOPS",
+  "womens-tees": "WOMENS TEES",
+  "womens-jackets": "JACKETS",
+  "womens-jeans": "JEANS",
 };
 
 export function getCollectionTitle(slug: string): string {
+  if (collectionMeta[slug]) {
+    return collectionMeta[slug].title;
+  }
+
   for (const category of navigationData) {
     if (category.url === `/collections/${slug}`) {
       return category.label;
@@ -56,3 +57,20 @@ export function getCollectionTitle(slug: string): string {
 
   return slugLabels[slug] ?? slug.replace(/-/g, " ").toUpperCase();
 }
+
+export function getCollectionMeta(slug: string): CollectionMeta {
+  if (collectionMeta[slug]) {
+    return collectionMeta[slug];
+  }
+
+  return {
+    slug,
+    title: getCollectionTitle(slug),
+    displayTitle: getCollectionTitle(slug)
+      .toLowerCase()
+      .replace(/\b\w/g, (c) => c.toUpperCase()),
+    showHero: false,
+  };
+}
+
+export { otherCollections };
