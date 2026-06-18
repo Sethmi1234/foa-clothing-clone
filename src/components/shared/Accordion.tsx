@@ -21,19 +21,32 @@ export default function Accordion({ items, className = "" }: AccordionProps) {
       {items.map((item) => {
         const isOpen = openId === item.id;
         return (
-          <div key={item.id} className="border-b border-neutral-200">
+          <div key={item.id} className="border-b border-[#e2e2e2]">
             <button
               type="button"
               onClick={() => setOpenId(isOpen ? null : item.id)}
-              className="flex w-full items-center justify-between py-5 text-left"
+              className="flex w-full items-center justify-between gap-4 py-5 text-left"
             >
-              <span className="pr-4 text-[13px] font-medium uppercase tracking-[0.04em] text-black">
+              <span className="text-[14px] font-medium normal-case tracking-normal text-[#151515]">
                 {item.title}
               </span>
-              <span className="text-xl leading-none text-black">{isOpen ? "−" : "+"}</span>
+              <span className="relative h-4 w-4 shrink-0">
+                <span
+                  className={`absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 bg-[#151515] transition-transform ${
+                    isOpen ? "rotate-0" : ""
+                  }`}
+                />
+                <span
+                  className={`absolute left-1/2 top-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-[#151515] transition-transform ${
+                    isOpen ? "rotate-90 opacity-0" : "opacity-100"
+                  }`}
+                />
+              </span>
             </button>
             {isOpen && item.content && (
-              <p className="pb-5 text-[14px] leading-relaxed text-neutral-600">{item.content}</p>
+              <div className="pb-5 text-[14px] leading-relaxed text-[#8e8e8e]">
+                <p>{item.content}</p>
+              </div>
             )}
           </div>
         );

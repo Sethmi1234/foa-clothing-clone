@@ -47,7 +47,7 @@ export const heroSlides: HeroSlide[] = [
 ];
 
 export const newCollectionProducts: Product[] = allProducts.filter((p) =>
-  p.collections.includes("new")
+  p.collections && Array.isArray(p.collections) && p.collections.includes("new")
 );
 
 export const bestSellerProducts: Product[] = allProducts.filter((p) =>

@@ -14,6 +14,7 @@ export default function Home() {
       <NewCollection />
       <SectionDivider />
       <CategoryGrid />
+      <div className="h-12 w-full bg-white md:h-16" aria-hidden="true" />
       <ShopTheLook />
       <CollectionShowcase />
       <SectionDivider />

@@ -93,3 +93,34 @@ export type FooterData = {
   support: FooterSection;
   info: FooterSection;
 };
+
+export type CartItem = {
+  lineId: string;
+  productId: string;
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+  size?: string;
+  color?: string;
+  href: string;
+};
+
+export type DeliveryMethod = "ship" | "pickup";
+
+export type CheckoutFormData = {
+  email: string;
+  emailOffers: boolean;
+  deliveryMethod: DeliveryMethod;
+  country: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  apartment: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  phone: string;
+  saveInfo: boolean;
+  orderNote: string;
+};

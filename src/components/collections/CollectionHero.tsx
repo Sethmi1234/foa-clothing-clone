@@ -6,9 +6,11 @@ import type { CollectionMeta } from "@/types";
 
 type CollectionHeroProps = {
   meta: CollectionMeta;
+  parentSlug?: string;
+  parentTitle?: string;
 };
 
-export default function CollectionHero({ meta }: CollectionHeroProps) {
+export default function CollectionHero({ meta, parentSlug, parentTitle }: CollectionHeroProps) {
   if (!meta.showHero || !meta.heroImage) return null;
 
   return (
@@ -36,6 +38,14 @@ export default function CollectionHero({ meta }: CollectionHeroProps) {
             <Link href="/collections/men" className="hover:underline">
               Shop
             </Link>
+            {parentSlug && parentTitle && (
+              <>
+                {" / "}
+                <Link href={`/collections/${parentSlug}`} className="hover:underline">
+                  {parentTitle}
+                </Link>
+              </>
+            )}
             {" / "}
             <span>{meta.displayTitle}</span>
           </p>

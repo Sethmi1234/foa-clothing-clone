@@ -10,6 +10,7 @@ import { Logo } from "@/components/icons/Logo";
 import { MenuIcon } from "@/components/icons/MenuIcon";
 import { SearchIcon } from "@/components/icons/SearchIcon";
 import { UserIcon } from "@/components/icons/UserIcon";
+import { useCart } from "@/context/CartContext";
 import MegaMenu from "@/components/layout/MegaMenu";
 import { navigationData } from "@/data/navigation";
 import type { TopLevelCategory } from "@/types/navigation";
@@ -23,11 +24,12 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<TopLevelCategory | null>(null);
   const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
+  const { itemCount, openDrawer } = useCart();
 
   const isLight = transparent && !scrolled;
   const textColor = isLight ? "text-white" : "text-black";
-  const borderHover = isLight ? "hover:border-white" : "hover:border-black";
-  const activeBorder = isLight ? "border-white" : "border-black";
+  const borderHover = "hover:border-white";
+  const activeBorder = "border-white";
   const bgClass = isLight ? "bg-transparent" : "bg-white";
 
   const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -78,7 +80,7 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
       <Link
         href={category.url ?? "#"}
         onClick={handleNavClick}
-        className={`flex items-center gap-1 border-b-2 pb-1 text-[12px] font-normal uppercase tracking-[0.04em] transition-colors  ${
+        className={`flex items-center gap-1 border-b-2 pb-1 text-[13px] font-normal uppercase tracking-[0.04em] transition-colors  ${
           category.isSale ? "text-foa-red" : textColor
         } ${
           activeCategory?.id === category.id ? activeBorder : "border-transparent"
@@ -92,7 +94,7 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
 
   return (
     <header
-      className={`relative transition-colors duration-300 ${bgClass}`}
+      className={`relative border-b border-white/20 transition-colors duration-300 ${bgClass}`}
       onMouseLeave={() => setActiveCategory(null)}
     >
       <div className="relative mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 md:px-8 md:py-[22px]">
@@ -122,7 +124,7 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
         <div className={`flex flex-1 items-center justify-end gap-4 md:gap-5 ${textColor}`}>
           <Link
             href="/account/login"
-            className="hidden text-[12px] font-normal uppercase tracking-[0.04em] transition-opacity hover:opacity-70 sm:inline"
+            className="hidden text-[13px] font-normal uppercase tracking-[0.04em] transition-opacity hover:opacity-70 sm:inline"
             aria-label="Log in"
           >
             <UserIcon className="sm:hidden" />
@@ -135,6 +137,7 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
             type="button"
             aria-label="Cart"
             className="relative transition-opacity hover:opacity-70"
+            onClick={openDrawer}
           >
             <CartIcon />
             <span
@@ -142,7 +145,7 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
                 isLight ? "bg-white text-black" : "bg-black text-white"
               }`}
             >
-              0
+              {itemCount}
             </span>
           </button>
         </div>

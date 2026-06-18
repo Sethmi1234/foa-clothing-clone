@@ -1,9 +1,8 @@
 import { Prompt } from "next/font/google";
 import "./globals.css";
-import FloatingActions from "@/components/layout/FloatingActions";
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
-import MainContent from "@/components/layout/MainContent";
+import SiteShell from "@/components/layout/SiteShell";
+import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 
 const prompt = Prompt({
@@ -27,10 +26,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${prompt.variable} font-[family-name:var(--font-prompt)] antialiased`}>
         <CurrencyProvider>
-          <Header />
-          <MainContent>{children}</MainContent>
-          <Footer />
-          <FloatingActions />
+          <CartProvider>
+            <WishlistProvider>
+              <SiteShell>{children}</SiteShell>
+            </WishlistProvider>
+          </CartProvider>
         </CurrencyProvider>
       </body>
     </html>

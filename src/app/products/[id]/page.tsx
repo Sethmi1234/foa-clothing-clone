@@ -2,7 +2,10 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import ProductGallery from "@/components/products/ProductGallery";
 import ProductInfo from "@/components/products/ProductInfo";
-import { getProductById, getAllProducts } from "@/lib/products";
+import CustomerReviews from "@/components/shared/CustomerReviews";
+import FAQSection from "@/components/shared/FAQSection";
+import YouMayAlsoLike from "@/components/shared/YouMayAlsoLike";
+import { getProductById, getAllProducts, getRelatedProducts } from "@/lib/products";
 
 type ProductPageProps = {
   params: Promise<{ id: string }>;
@@ -33,31 +36,34 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const relatedProducts = getRelatedProducts(id, 4);
+
   return (
-    <div className="bg-white py-6 md:py-10">
-      <div className="mx-auto max-w-[1440px] px-4 md:px-10">
-        {/* Breadcrumb */}
-        <nav className="mb-6 text-[11px] uppercase tracking-[0.06em] text-neutral-500">
-          <a href="/" className="hover:text-black">Home</a>
-          <span className="mx-2">/</span>
-          <a href={`/collections/${product.collections[0]}`} className="hover:text-black">
-            {product.collections[0]}
-          </a>
-          <span className="mx-2">/</span>
-          <span className="text-black">{product.name}</span>
-        </nav>
+    <>
+      <div className="bg-white py-6 md:py-10">
+        <div className="mx-auto max-w-[1440px] px-4 md:px-10">
+          <nav className="mb-6 text-[11px] uppercase tracking-[0.06em] text-neutral-500">
+            <a href="/" className="hover:text-black">Home</a>
+            <span className="mx-2">/</span>
+            <a href={`/collections/${product.collections[0]}`} className="hover:text-black">
+              {product.collections[0]}
+            </a>
+            <span className="mx-2">/</span>
+            <span className="text-black">{product.name}</span>
+          </nav>
 
-        {/* Main Content */}
-        <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
-          {/* Left: Gallery */}
-          <ProductGallery product={product} />
-
-          {/* Right: Product Info */}
-          <div className="md:sticky md:top-[120px] md:self-start">
-            <ProductInfo product={product} />
+          <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
+            <ProductGallery product={product} />
+            <div className="md:sticky md:top-[120px] md:self-start">
+              <ProductInfo product={product} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <CustomerReviews />
+      <FAQSection />
+      <YouMayAlsoLike products={relatedProducts} />
+    </>
   );
 }
