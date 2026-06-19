@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useWishlist } from "@/context/WishlistContext";
 import { HeartIcon } from "@/components/icons/HeartIcon";
 
 type WishlistButtonProps = {
@@ -16,22 +16,55 @@ export default function WishlistButton({
   variant = "card",
   className = "",
 }: WishlistButtonProps) {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { isInWishlist, toggleItem } = useWishlist();
+  const isWishlisted = isInWishlist(productId);
 
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsWishlisted((prev) => !prev);
+    toggleItem(productId, productName);
   };
+
+  if (variant === "page") {
+    return (
+      <button
+        type="button"
+        onClick={handleToggle}
+        aria-label={
+          isWishlisted
+            ? `Remove ${productName} from wishlist`
+            : `Add ${productName} to wishlist`
+        }
+        className={`group flex items-center gap-2 transition-opacity hover:opacity-70 ${className}`}
+      >
+        <HeartIcon
+          filled={isWishlisted}
+          className={isWishlisted ? "text-black" : "text-black"}
+        />
+        <span className="text-[13px] font-semibold uppercase tracking-[0.06em]">
+          {isWishlisted ? "Wishlisted" : "Add to Wishlist"}
+        </span>
+      </button>
+    );
+  }
 
   return (
     <button
       type="button"
       onClick={handleToggle}
-      aria-label={isWishlisted ? `Remove ${productName} from wishlist` : `Add ${productName} to wishlist`}
-      className={`flex items-center justify-center transition-opacity hover:opacity-70 ${className}`}
+      aria-label={
+        isWishlisted
+          ? `Remove ${productName} from wishlist`
+          : `Add ${productName} to wishlist`
+      }
+      className={`flex items-center justify-center transition-transform duration-150 active:scale-90 ${className}`}
     >
-      <HeartIcon filled={isWishlisted} />
+      <HeartIcon
+        filled={isWishlisted}
+        className={`transition-colors duration-200 ${
+          isWishlisted ? "text-black" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+        }`}
+      />
     </button>
   );
 }
