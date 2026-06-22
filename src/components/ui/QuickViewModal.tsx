@@ -1,12 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import { useState } from "react";
 import { CloseIcon } from "@/components/icons/CloseIcon";
 import WishlistButton from "@/components/wishlist/WishlistButton";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import { useCart } from "@/context/CartContext";
+import { getDisplayImages } from "@/lib/productImages";
 import type { Product } from "@/types";
 
 type QuickViewModalProps = {
@@ -22,9 +23,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
 
   if (!product) return null;
 
-  const activeColor = product.colors?.[selectedColor];
-  const displayImage = activeColor?.image ?? product.image;
-  const displayHover = activeColor?.hoverImage ?? product.hoverImage;
+  const { primary: displayImage, hover: displayHover } = getDisplayImages(product, selectedColor);
 
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
@@ -69,16 +68,18 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               <div className="grid grid-cols-1 md:grid-cols-2">
                 {/* Product Images */}
                 <div className="relative aspect-[4/5] bg-[#f3f3f3] md:aspect-auto">
-                  <Image
+                  <SafeImage
                     src={displayImage}
+                    fallbackSrc={product.image}
                     alt={product.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover object-center"
                   />
                   {displayHover && displayHover !== displayImage && (
-                    <Image
+                    <SafeImage
                       src={displayHover}
+                      fallbackSrc={displayImage}
                       alt=""
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
@@ -177,8 +178,13 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                       Add to Cart
                     </button>
                     <WishlistButton
-                      productId={product.id}
-                      productName={product.name}
+                      product={{
+                        id: product.id,
+                        name: product.name,
+                        image: displayImage,
+                        price: product.price,
+                        href: product.href,
+                      }}
                       variant="page"
                     />
                   </div>

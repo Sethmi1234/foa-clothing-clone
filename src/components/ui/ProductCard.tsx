@@ -1,14 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import WishlistButton from "@/components/wishlist/WishlistButton";
+import { type WishlistItem } from "@/context/WishlistContext";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import { fadeIn } from "@/lib/animations";
+import { getDisplayImages } from "@/lib/productImages";
 import type { Product } from "@/types";
 
 type ProductCardProps = {
@@ -22,9 +24,7 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const { addItem } = useCart();
 
-  const activeColor = product.colors?.[selectedColor];
-  const displayImage = activeColor?.image ?? product.image;
-  const displayHover = activeColor?.hoverImage ?? product.hoverImage;
+  const { primary: displayImage, hover: displayHover } = getDisplayImages(product, selectedColor);
   const hasColorVariants = Boolean(product.colors && product.colors.length > 0);
   const showHoverImage = isHovered && displayHover && displayHover !== displayImage;
 
@@ -39,9 +39,10 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
         onMouseLeave={() => setIsHovered(false)}
       >
         <Link href={product.href} className="relative block h-full w-full">
-          <Image
+          <SafeImage
             key={`${product.id}-${selectedColor}-primary`}
             src={displayImage}
+            fallbackSrc={product.image}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
@@ -50,9 +51,10 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
             }`}
           />
           {displayHover && displayHover !== displayImage && (
-            <Image
+            <SafeImage
               key={`${product.id}-${selectedColor}-hover`}
               src={displayHover}
+              fallbackSrc={displayImage}
               alt=""
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
@@ -64,8 +66,13 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
         </Link>
 
         <WishlistButton
-          productId={product.id}
-          productName={product.name}
+          product={{
+            id: product.id,
+            name: product.name,
+            image: displayImage,
+            price: product.price,
+            href: product.href,
+          }}
           variant="card"
           className="absolute right-3 top-3 z-10"
         />

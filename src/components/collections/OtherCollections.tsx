@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import type { OtherCollectionGroup } from "@/types";
 
@@ -38,7 +38,7 @@ export default function OtherCollections({ groups }: OtherCollectionsProps) {
             <div key={group.id} className="group">
               <Link href={group.href} className="block" title={group.label}>
                 <div className="relative aspect-[16/9] w-full overflow-hidden bg-white">
-                  <Image
+                  <SafeImage
                     src={group.image}
                     alt={group.label}
                     fill

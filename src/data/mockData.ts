@@ -5,8 +5,10 @@ import type {
   HeroSlide,
   Product,
 } from "@/types";
-import { allProducts } from "@/data/collections";
+import { getAllProducts } from "@/lib/products";
 import { shopImage } from "@/lib/images";
+
+const sanitizedProducts = getAllProducts();
 
 export const announcementMessages = [
   "ORDERS WILL TAKE 4 TO 6 WORKING DAYS FOR DELIVERY",
@@ -46,11 +48,11 @@ export const heroSlides: HeroSlide[] = [
   },
 ];
 
-export const newCollectionProducts: Product[] = allProducts.filter((p) =>
+export const newCollectionProducts: Product[] = sanitizedProducts.filter((p) =>
   p.collections && Array.isArray(p.collections) && p.collections.includes("new")
 );
 
-export const bestSellerProducts: Product[] = allProducts.filter((p) =>
+export const bestSellerProducts: Product[] = sanitizedProducts.filter((p) =>
   ["tees", "denim", "bags", "accessories"].includes(p.category)
 );
 

@@ -1,32 +1,39 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import type { Product } from "@/types";
 
 type ProductGalleryProps = {
   product: Product;
+  images: string[];
+  selectedImage: number;
+  onSelectImage: (index: number) => void;
 };
 
-export default function ProductGallery({ product }: ProductGalleryProps) {
-  const allImages = product.images || [product.image];
-  const [selectedImage, setSelectedImage] = useState(0);
+export default function ProductGallery({
+  product,
+  images,
+  selectedImage,
+  onSelectImage,
+}: ProductGalleryProps) {
+  const safeIndex = Math.min(selectedImage, Math.max(images.length - 1, 0));
+  const mainImage = images[safeIndex] ?? product.image;
 
   return (
     <div className="flex flex-col gap-4 md:flex-row">
-      {/* Thumbnails */}
       <div className="order-1 flex gap-2 overflow-x-auto md:order-1 md:w-20 md:flex-col">
-        {allImages.map((img, index) => (
+        {images.map((img, index) => (
           <button
-            key={index}
+            key={`${img}-${index}`}
             type="button"
-            onClick={() => setSelectedImage(index)}
+            onClick={() => onSelectImage(index)}
             className={`relative h-16 w-16 shrink-0 overflow-hidden border-2 md:h-20 md:w-20 ${
-              selectedImage === index ? "border-black" : "border-transparent"
+              safeIndex === index ? "border-black" : "border-transparent"
             }`}
           >
-            <Image
+            <SafeImage
               src={img}
+              fallbackSrc={mainImage}
               alt={`${product.name} view ${index + 1}`}
               fill
               className="object-cover"
@@ -36,11 +43,12 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
         ))}
       </div>
 
-      {/* Main Image */}
       <div className="order-2 flex-1 md:order-2">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#f3f3f3]">
-          <Image
-            src={allImages[selectedImage]}
+          <SafeImage
+            key={mainImage}
+            src={mainImage}
+            fallbackSrc={mainImage}
             alt={product.name}
             fill
             className="object-cover object-center"

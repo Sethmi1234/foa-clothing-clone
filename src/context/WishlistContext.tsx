@@ -6,49 +6,73 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
 
 const WISHLIST_STORAGE_KEY = "foa-wishlist";
 
-export type WishlistToast = {
-  id: number;
-  productName: string;
-  action: "added" | "removed";
+export type WishlistItem = {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  href: string;
 };
 
 type WishlistContextValue = {
-  items: string[];
+  items: WishlistItem[];
   count: number;
-  toasts: WishlistToast[];
+  isDrawerOpen: boolean;
   isInWishlist: (productId: string) => boolean;
-  toggleItem: (productId: string, productName?: string) => void;
-  addItem: (productId: string, productName?: string) => void;
-  removeItem: (productId: string, productName?: string) => void;
-  dismissToast: (id: number) => void;
+  toggleItem: (product: WishlistItem) => void;
+  addItem: (product: WishlistItem) => void;
+  removeItem: (productId: string) => void;
+  openDrawer: () => void;
+  closeDrawer: () => void;
 };
 
 const WishlistContext = createContext<WishlistContextValue | null>(null);
 
-function readStoredWishlist(): string[] {
+function readStoredWishlist(): WishlistItem[] {
   if (typeof window === "undefined") return [];
   try {
     const stored = window.localStorage.getItem(WISHLIST_STORAGE_KEY);
     if (!stored) return [];
-    const parsed = JSON.parse(stored) as string[];
-    return Array.isArray(parsed) ? parsed : [];
+    const parsed = JSON.parse(stored);
+
+    if (Array.isArray(parsed)) {
+      if (parsed.length > 0 && typeof parsed[0] === "string") {
+        window.localStorage.removeItem(WISHLIST_STORAGE_KEY);
+        return [];
+      }
+      const validItems = parsed.filter(
+        (item): item is WishlistItem =>
+          item &&
+          typeof item === "object" &&
+          typeof item.id === "string" &&
+          typeof item.name === "string" &&
+          typeof item.image === "string" &&
+          typeof item.price === "number" &&
+          typeof item.href === "string"
+      );
+
+      if (validItems.length !== parsed.length) {
+        window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(validItems));
+      }
+
+      return validItems;
+    }
+    return [];
   } catch {
     return [];
   }
 }
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<string[]>([]);
+  const [items, setItems] = useState<WishlistItem[]>([]);
   const [isHydrated, setIsHydrated] = useState(false);
-  const [toasts, setToasts] = useState<WishlistToast[]>([]);
-  const toastCounter = useRef(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     setItems(readStoredWishlist());
@@ -60,70 +84,47 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(items));
   }, [items, isHydrated]);
 
-  const showToast = useCallback((productName: string, action: "added" | "removed") => {
-    const id = ++toastCounter.current;
-    setToasts((prev) => [...prev, { id, productName, action }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3000);
-  }, []);
-
-  const dismissToast = useCallback((id: number) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  }, []);
-
   const isInWishlist = useCallback(
-    (productId: string) => items.includes(productId),
+    (productId: string) => items.some((item) => item.id === productId),
     [items]
   );
 
-  const addItem = useCallback(
-    (productId: string, productName?: string) => {
-      setItems((current) => {
-        if (current.includes(productId)) return current;
-        if (productName) showToast(productName, "added");
-        return [...current, productId];
-      });
-    },
-    [showToast]
-  );
+  const addItem = useCallback((product: WishlistItem) => {
+    setItems((current) => {
+      if (current.some((item) => item.id === product.id)) return current;
+      return [...current, product];
+    });
+  }, []);
 
-  const removeItem = useCallback(
-    (productId: string, productName?: string) => {
-      setItems((current) => {
-        if (!current.includes(productId)) return current;
-        if (productName) showToast(productName, "removed");
-        return current.filter((id) => id !== productId);
-      });
-    },
-    [showToast]
-  );
+  const removeItem = useCallback((productId: string) => {
+    setItems((current) => current.filter((item) => item.id !== productId));
+  }, []);
 
-  const toggleItem = useCallback(
-    (productId: string, productName?: string) => {
-      setItems((current) => {
-        const isIn = current.includes(productId);
-        if (productName) showToast(productName, isIn ? "removed" : "added");
-        return isIn
-          ? current.filter((id) => id !== productId)
-          : [...current, productId];
-      });
-    },
-    [showToast]
-  );
+  const toggleItem = useCallback((product: WishlistItem) => {
+    setItems((current) => {
+      const isIn = current.some((item) => item.id === product.id);
+      return isIn
+        ? current.filter((item) => item.id !== product.id)
+        : [...current, product];
+    });
+  }, []);
+
+  const openDrawer = useCallback(() => setIsDrawerOpen(true), []);
+  const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
 
   const value = useMemo(
     () => ({
       items,
       count: items.length,
-      toasts,
+      isDrawerOpen,
       isInWishlist,
       toggleItem,
       addItem,
       removeItem,
-      dismissToast,
+      openDrawer,
+      closeDrawer,
     }),
-    [items, toasts, isInWishlist, toggleItem, addItem, removeItem, dismissToast]
+    [items, isDrawerOpen, isInWishlist, toggleItem, addItem, removeItem, openDrawer, closeDrawer]
   );
 
   return <WishlistContext.Provider value={value}>{children}</WishlistContext.Provider>;

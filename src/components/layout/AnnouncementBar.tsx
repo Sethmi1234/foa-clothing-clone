@@ -2,29 +2,44 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { announcementMessages } from "@/data/mockData";
+import { useCart } from "@/context/CartContext";
+
+const FREE_SHIPPING_THRESHOLD = 9999;
 
 type AnnouncementBarProps = {
   scrolled?: boolean;
 };
 
 export default function AnnouncementBar({ scrolled = false }: AnnouncementBarProps) {
+  const { subtotal } = useCart();
   const items = [...announcementMessages, ...announcementMessages];
+  const hasFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
 
+  // Always show the black marquee when at the top (not scrolled).
+  // Only when scrolled, show the solid bar which can be either:
+  // - "CONGRATULATIONS! You've got free shipping" (subtotal >= 9999)
+  // - "FREE SHIPPING FOR ORDERS ABOVE Rs.9999" (subtotal < 9999)
   return (
     <AnimatePresence mode="wait">
       {scrolled ? (
         <motion.div
-          key="scrolled"
+          key={hasFreeShipping ? "free-shipping" : "scrolled"}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="relative z-[60] flex h-[34px] items-center justify-center bg-[#faf6f4] text-black"
         >
-          <p className="text-[11px] font-normal uppercase leading-none tracking-[0.02em] md:text-[12px]">
-            FREE SHIPPING FOR ORDERS ABOVE{" "}
-            <span className="text-foa-red">Rs.9999</span>
-          </p>
+          {hasFreeShipping ? (
+            <p className="text-[11px] font-normal uppercase leading-none tracking-[0.02em] md:text-[12px]">
+              CONGRATULATIONS! You've got free shipping
+            </p>
+          ) : (
+            <p className="text-[11px] font-normal uppercase leading-none tracking-[0.02em] md:text-[12px]">
+              FREE SHIPPING FOR ORDERS ABOVE{" "}
+              <span className="text-foa-red">Rs.9999</span>
+            </p>
+          )}
         </motion.div>
       ) : (
         <motion.div

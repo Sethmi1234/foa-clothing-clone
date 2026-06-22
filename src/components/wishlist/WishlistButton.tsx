@@ -1,28 +1,26 @@
 "use client";
 
-import { useWishlist } from "@/context/WishlistContext";
+import { useWishlist, type WishlistItem } from "@/context/WishlistContext";
 import { HeartIcon } from "@/components/icons/HeartIcon";
 
 type WishlistButtonProps = {
-  productId: string;
-  productName: string;
+  product: WishlistItem;
   variant?: "card" | "page";
   className?: string;
 };
 
 export default function WishlistButton({
-  productId,
-  productName,
+  product,
   variant = "card",
   className = "",
 }: WishlistButtonProps) {
   const { isInWishlist, toggleItem } = useWishlist();
-  const isWishlisted = isInWishlist(productId);
+  const isWishlisted = isInWishlist(product.id);
 
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleItem(productId, productName);
+    toggleItem(product);
   };
 
   if (variant === "page") {
@@ -32,16 +30,14 @@ export default function WishlistButton({
         onClick={handleToggle}
         aria-label={
           isWishlisted
-            ? `Remove ${productName} from wishlist`
-            : `Add ${productName} to wishlist`
+            ? `Remove ${product.name} from wishlist`
+            : `Add ${product.name} to wishlist`
         }
-        className={`group flex items-center gap-2 transition-opacity hover:opacity-70 ${className}`}
+        aria-pressed={isWishlisted}
+        className={`flex items-center gap-2 transition-opacity hover:opacity-70 ${className}`}
       >
-        <HeartIcon
-          filled={isWishlisted}
-          className={isWishlisted ? "text-black" : "text-black"}
-        />
-        <span className="text-[13px] font-semibold uppercase tracking-[0.06em]">
+        <HeartIcon filled={isWishlisted} className="text-black" />
+        <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-black">
           {isWishlisted ? "Wishlisted" : "Add to Wishlist"}
         </span>
       </button>
@@ -54,15 +50,18 @@ export default function WishlistButton({
       onClick={handleToggle}
       aria-label={
         isWishlisted
-          ? `Remove ${productName} from wishlist`
-          : `Add ${productName} to wishlist`
+          ? `Remove ${product.name} from wishlist`
+          : `Add ${product.name} to wishlist`
       }
+      aria-pressed={isWishlisted}
       className={`flex items-center justify-center transition-transform duration-150 active:scale-90 ${className}`}
     >
       <HeartIcon
         filled={isWishlisted}
         className={`transition-colors duration-200 ${
-          isWishlisted ? "text-black" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+          isWishlisted
+            ? "text-black"
+            : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]"
         }`}
       />
     </button>

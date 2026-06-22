@@ -1,24 +1,27 @@
 import type { Product } from "@/types";
 import { allProducts } from "@/data/collections";
+import { sanitizeProductImages } from "@/lib/productImages";
+
+const products = allProducts.map(sanitizeProductImages);
 
 export function getProductById(id: string): Product | undefined {
-  return allProducts.find((product) => product.id === id);
+  return products.find((product) => product.id === id);
 }
 
 export function getAllProducts(): Product[] {
-  return allProducts;
+  return products;
 }
 
 export function getProductsByCollection(slug: string): Product[] {
-  return allProducts.filter((product) => product.collections.includes(slug));
+  return products.filter((product) => product.collections.includes(slug));
 }
 
 export function getRelatedProducts(productId: string, limit = 4): Product[] {
   const product = getProductById(productId);
-  if (!product) return allProducts.filter((p) => p.id !== productId).slice(0, limit);
+  if (!product) return products.filter((p) => p.id !== productId).slice(0, limit);
 
   const collection = product.collections[0];
-  const fromCollection = allProducts.filter(
+  const fromCollection = products.filter(
     (p) => p.id !== productId && p.collections.includes(collection)
   );
 
@@ -26,7 +29,7 @@ export function getRelatedProducts(productId: string, limit = 4): Product[] {
     return fromCollection.slice(0, limit);
   }
 
-  const remaining = allProducts.filter(
+  const remaining = products.filter(
     (p) => p.id !== productId && !fromCollection.some((item) => item.id === p.id)
   );
 

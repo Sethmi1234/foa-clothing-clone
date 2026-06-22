@@ -10,6 +10,7 @@ import { Logo } from "@/components/icons/Logo";
 import { MenuIcon } from "@/components/icons/MenuIcon";
 import { SearchIcon } from "@/components/icons/SearchIcon";
 import { UserIcon } from "@/components/icons/UserIcon";
+import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import MegaMenu from "@/components/layout/MegaMenu";
 import { navigationData } from "@/data/navigation";
@@ -24,6 +25,7 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<TopLevelCategory | null>(null);
   const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
+  const { isLoggedIn } = useAuth();
   const { itemCount, openDrawer } = useCart();
 
   const isLight = transparent && !scrolled;
@@ -46,11 +48,9 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
     setMobileExpandedId(null);
   }, []);
 
-  // Use ref to track activeCategory without re-registering listeners
   const activeCategoryRef = useRef(activeCategory);
   activeCategoryRef.current = activeCategory;
 
-  // Close mobile dropdown and mega menu on route change and scroll
   useEffect(() => {
     const handleRouteChange = () => {
       closeMobile();
@@ -98,7 +98,6 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
       onMouseLeave={() => setActiveCategory(null)}
     >
       <div className="relative mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 md:px-8 md:py-[22px]">
-        {/* Mobile menu toggle */}
         <button
           type="button"
           className={`md:hidden ${textColor}`}
@@ -108,27 +107,24 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
           {mobileOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
 
-        {/* Desktop nav - left */}
         <nav className="hidden flex-1 md:block">
           <ul className="flex items-center gap-5 lg:gap-7">
             {navigationData.map(renderNavItem)}
           </ul>
         </nav>
 
-        {/* Logo - center */}
         <div className="absolute left-1/2 -translate-x-1/2">
           <Logo variant={isLight ? "light" : "dark"} onClick={handleLogoClick} />
         </div>
 
-        {/* Right icons */}
         <div className={`flex flex-1 items-center justify-end gap-4 md:gap-5 ${textColor}`}>
           <Link
-            href="/account/login"
+            href={isLoggedIn ? "/account" : "/account/login"}
             className="hidden text-[13px] font-normal uppercase tracking-[0.04em] transition-opacity hover:opacity-70 sm:inline"
-            aria-label="Log in"
+            aria-label={isLoggedIn ? "My account" : "Log in"}
           >
             <UserIcon className="sm:hidden" />
-            <span className="hidden sm:inline">Log in</span>
+            <span className="hidden sm:inline">{isLoggedIn ? "My Account" : "Log in"}</span>
           </Link>
           <button type="button" aria-label="Search" className="transition-opacity hover:opacity-70">
             <SearchIcon />
@@ -151,14 +147,12 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
         </div>
       </div>
 
-      {/* Desktop MegaMenu */}
       <MegaMenu
         category={activeCategory}
         isOpen={Boolean(activeCategory)}
         forceSolid={scrolled || Boolean(activeCategory)}
       />
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <nav className="absolute left-0 right-0 z-50 max-h-[calc(100vh-var(--header-height))] overflow-y-auto border-t border-neutral-200 bg-white px-4 pb-8 pt-4 shadow-lg md:hidden">
           <ul className="space-y-1">
@@ -236,12 +230,12 @@ export default function Navbar({ transparent = false, scrolled = false }: Navbar
             ))}
             <li className="border-t border-neutral-100 pt-3 mt-3">
               <Link
-                href="/account/login"
+                href={isLoggedIn ? "/account" : "/account/login"}
                 onClick={closeMobile}
                 className="flex items-center gap-2 py-3 text-[13px] font-medium uppercase tracking-[0.06em] text-black"
               >
                 <UserIcon className="size-4" />
-                Log in
+                {isLoggedIn ? "My Account" : "Log in"}
               </Link>
             </li>
           </ul>

@@ -1,20 +1,43 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
+  const { login, isLoggedIn, isHydrated } = useAuth();
+  const router = useRouter();
   const [showRecover, setShowRecover] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (isHydrated && isLoggedIn) {
+      router.replace("/account");
+    }
+  }, [isHydrated, isLoggedIn, router]);
 
   useEffect(() => {
     const syncHash = () => {
       setShowRecover(window.location.hash === "#recover");
     };
-
     syncHash();
     window.addEventListener("hashchange", syncHash);
     return () => window.removeEventListener("hashchange", syncHash);
   }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login(email, password);
+    router.push("/account");
+  };
+
+  const handleRecover = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowRecover(false);
+    window.location.hash = "";
+  };
 
   return (
     <div className="bg-white">
@@ -28,7 +51,7 @@ export default function LoginPage() {
               <p className="mb-[35px] text-center text-[14px] text-[#151515]">
                 We will send you an email to reset your password
               </p>
-              <form className="space-y-2.5" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-2.5" onSubmit={handleRecover}>
                 <div className="thb-field">
                   <input
                     type="email"
@@ -37,7 +60,7 @@ export default function LoginPage() {
                     autoComplete="email"
                     autoCorrect="off"
                     autoCapitalize="off"
-                    placeholder="Email address"
+                    placeholder=" "
                     required
                     className="thb-field-input"
                   />
@@ -57,7 +80,7 @@ export default function LoginPage() {
             </div>
           ) : (
             <div className="thb-login-form mx-auto w-full max-w-[640px] md:px-[30px] lg:px-[60px]">
-              <form id="customer_login" className="space-y-2.5" onSubmit={(e) => e.preventDefault()}>
+              <form id="customer_login" className="space-y-2.5" onSubmit={handleLogin}>
                 <h4 className="mb-2.5 text-center text-[18px] font-bold uppercase tracking-wide text-[#151515]">
                   Log in
                 </h4>
@@ -72,8 +95,10 @@ export default function LoginPage() {
                     autoComplete="email"
                     autoCorrect="off"
                     autoCapitalize="off"
-                    placeholder="Email address"
+                    placeholder=" "
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="thb-field-input"
                   />
                   <label htmlFor="customer_email" className="thb-field-label">
@@ -86,8 +111,10 @@ export default function LoginPage() {
                     id="customer_password"
                     name="customer[password]"
                     autoComplete="current-password"
-                    placeholder="Password"
+                    placeholder=" "
                     required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="thb-field-input"
                   />
                   <label htmlFor="customer_password" className="thb-field-label">
@@ -98,12 +125,12 @@ export default function LoginPage() {
                   <span>Sign in</span>
                 </button>
                 <div className="switch-login-section mt-[15px] text-center text-[14px] leading-[1.75]">
-                  Don&apos;t have an account?{" "}
+                  Don't have an account?{" "}
                   <Link href="/account/register" className="thb-text-button">
                     Create an account
                   </Link>
                   <div className="mt-1.5">
-                    <Link href="/account/login#recover" className="thb-text-button">
+                    <Link href="/account/recover" className="thb-text-button">
                       Forgot your password?
                     </Link>
                   </div>

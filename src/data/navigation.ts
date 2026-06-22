@@ -1,10 +1,16 @@
 import type { TopLevelCategory } from "@/types/navigation";
+import { shopImage } from "@/lib/images";
 
 export const navigationData: TopLevelCategory[] = [
   {
     id: "cat-mens",
     label: "MENS",
     url: "/collections/men",
+    promotion: {
+      image: shopImage("Mens_91b68e54-5157-486c-9c9e-6a2b661972f3.png?v=1761128934", 670),
+      href: "/collections/men",
+      cta: "Shop Mens",
+    },
     columns: [
       {
         id: "col-mens-clothing",
@@ -71,6 +77,11 @@ export const navigationData: TopLevelCategory[] = [
     id: "cat-womens",
     label: "WOMENS",
     url: "/collections/women",
+    promotion: {
+      image: shopImage("web_1_a3b9b7ef-a9c0-43fc-83a0-139d1dcf9a32.png?v=1769071508", 670),
+      href: "/collections/women",
+      cta: "Shop Womens",
+    },
     columns: [
       {
         id: "col-womens-clothing",
@@ -136,6 +147,12 @@ export const navigationData: TopLevelCategory[] = [
     id: "cat-accessories",
     label: "ACCESSORIES",
     url: "/collections/accessories",
+    promotion: {
+      image:
+        "https://cdn.shopify.com/s/files/1/0750/4415/9772/files/Accessories_b0d96e03-2e8e-432e-96ad-b724078cd445.png?v=1759915492",
+      href: "/collections/accessories",
+      cta: "Shop Accessories",
+    },
     columns: [
       {
         id: "col-accessories-products",
@@ -166,6 +183,11 @@ export const navigationData: TopLevelCategory[] = [
     id: "cat-footwear",
     label: "FOOTWEAR",
     url: "/collections/footwear",
+    promotion: {
+      image: shopImage("Shoes_2.jpg?v=1687365418", 670),
+      href: "/collections/footwear",
+      cta: "Shop Footwear",
+    },
     columns: [
       {
         id: "col-footwear-products",

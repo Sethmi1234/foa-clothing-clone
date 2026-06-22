@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Button from "@/components/ui/Button";
 import { ironIslandData } from "@/data/mockData";
 import { heroTextReveal } from "@/lib/animations";
@@ -9,7 +9,7 @@ import { heroTextReveal } from "@/lib/animations";
 export default function IronIsland() {
   return (
     <section className="relative h-[70vh] min-h-[500px] overflow-hidden md:h-[80vh]">
-      <Image
+      <SafeImage
         src={ironIslandData.image}
         alt={ironIslandData.title}
         fill

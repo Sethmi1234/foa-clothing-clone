@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { useState } from "react";
 import { collectionShowcase } from "@/data/mockData";
@@ -21,7 +21,7 @@ export default function CollectionShowcase() {
           style={{ zIndex: index === active ? 2 : 1 }}
           aria-hidden={index !== active}
         >
-          <Image
+          <SafeImage
             src={collection.image}
             alt={collection.title}
             fill

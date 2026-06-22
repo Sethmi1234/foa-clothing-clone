@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { TrashIcon } from "@/components/icons/TrashIcon";
 import QuantitySelector from "@/components/cart/QuantitySelector";
@@ -32,7 +32,7 @@ export default function CartLineItem({
     return (
       <div className="grid grid-cols-[88px_1fr_auto] gap-4 border-b border-[#e2e2e2] py-5 last:border-b-0">
         <div className="relative aspect-[2/3] overflow-hidden bg-[#f3f3f3]">
-          <Image src={item.image} alt={item.name} fill sizes="88px" className="object-cover object-center" />
+          <SafeImage src={item.image} alt={item.name} fill sizes="88px" className="object-cover object-center" />
         </div>
 
         <div className="min-w-0">
@@ -76,7 +76,7 @@ export default function CartLineItem({
       <td className="py-6 pr-4 align-top">
         <div className="flex gap-4">
           <div className="relative h-[120px] w-[84px] shrink-0 overflow-hidden bg-[#f3f3f3]">
-            <Image src={item.image} alt={item.name} fill sizes="84px" className="object-cover object-center" />
+            <SafeImage src={item.image} alt={item.name} fill sizes="84px" className="object-cover object-center" />
           </div>
           <div className="min-w-0">
             <Link

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import { categoryItems } from "@/data/mockData";
@@ -24,7 +24,7 @@ export default function CategoryGrid() {
                 href={item.href}
                 className="group relative block aspect-[4/5] overflow-hidden md:aspect-[3/4]"
               >
-                <Image
+                <SafeImage
                   src={item.image}
                   alt={item.label}
                   fill

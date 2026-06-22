@@ -1,6 +1,4 @@
-"use client";
-
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import type { CollectionMeta } from "@/types";
 
@@ -15,7 +13,7 @@ export default function CollectionHero({ meta, parentSlug, parentTitle }: Collec
 
   return (
     <section className="relative h-[280px] overflow-hidden md:h-[340px]">
-      <Image
+      <SafeImage
         src={meta.heroImage}
         alt={meta.displayTitle}
         fill

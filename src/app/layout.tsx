@@ -1,7 +1,9 @@
 import { Prompt } from "next/font/google";
 import "./globals.css";
 import SiteShell from "@/components/layout/SiteShell";
+import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
+import { SearchProvider } from "@/context/SearchContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 
@@ -25,13 +27,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${prompt.variable} font-[family-name:var(--font-prompt)] antialiased`}>
-        <CurrencyProvider>
-          <CartProvider>
-            <WishlistProvider>
-              <SiteShell>{children}</SiteShell>
-            </WishlistProvider>
-          </CartProvider>
-        </CurrencyProvider>
+        <AuthProvider>
+          <CurrencyProvider>
+            <CartProvider>
+              <WishlistProvider>
+                <SearchProvider>
+                  <SiteShell>{children}</SiteShell>
+                </SearchProvider>
+              </WishlistProvider>
+            </CartProvider>
+          </CurrencyProvider>
+        </AuthProvider>
       </body>
     </html>
   );

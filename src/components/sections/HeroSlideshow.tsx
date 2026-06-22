@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
@@ -34,7 +34,7 @@ export default function HeroSlideshow() {
           style={{ zIndex: index === current ? 2 : 1 }}
           aria-hidden={index !== current}
         >
-          <Image
+          <SafeImage
             src={s.desktopImage}
             alt={s.title}
             fill
@@ -42,7 +42,7 @@ export default function HeroSlideshow() {
             className="hidden object-cover object-center md:block"
             sizes="100vw"
           />
-          <Image
+          <SafeImage
             src={s.mobileImage}
             alt={s.title}
             fill

@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import ProductGallery from "@/components/products/ProductGallery";
-import ProductInfo from "@/components/products/ProductInfo";
+import ProductDetail from "@/components/products/ProductDetail";
 import CustomerReviews from "@/components/shared/CustomerReviews";
 import FAQSection from "@/components/shared/FAQSection";
 import YouMayAlsoLike from "@/components/shared/YouMayAlsoLike";
@@ -52,12 +51,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <span className="text-black">{product.name}</span>
           </nav>
 
-          <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
-            <ProductGallery product={product} />
-            <div className="md:sticky md:top-[120px] md:self-start">
-              <ProductInfo product={product} />
-            </div>
-          </div>
+          <ProductDetail product={product} />
         </div>
       </div>
 

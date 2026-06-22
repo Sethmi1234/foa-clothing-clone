@@ -1,11 +1,13 @@
 "use client";
 
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import WishlistButton from "@/components/wishlist/WishlistButton";
 import PriceDisplay from "@/components/ui/PriceDisplay";
+import QuickViewModal from "@/components/ui/QuickViewModal";
+import { getDisplayImages } from "@/lib/productImages";
 import type { Product } from "@/types";
 
 type CollectionProductCardProps = {
@@ -15,11 +17,10 @@ type CollectionProductCardProps = {
 export default function CollectionProductCard({ product }: CollectionProductCardProps) {
   const [selectedColor, setSelectedColor] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const { addItem } = useCart();
 
-  const activeColor = product.colors?.[selectedColor];
-  const displayImage = activeColor?.image ?? product.image;
-  const displayHover = activeColor?.hoverImage ?? product.hoverImage;
+  const { primary: displayImage, hover: displayHover } = getDisplayImages(product, selectedColor);
   const showHoverImage = isHovered && displayHover && displayHover !== displayImage;
 
   return (
@@ -30,8 +31,9 @@ export default function CollectionProductCard({ product }: CollectionProductCard
         onMouseLeave={() => setIsHovered(false)}
       >
         <Link href={product.href} className="relative block h-full w-full">
-          <Image
+          <SafeImage
             src={displayImage}
+            fallbackSrc={product.image}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
@@ -40,8 +42,9 @@ export default function CollectionProductCard({ product }: CollectionProductCard
             }`}
           />
           {displayHover && displayHover !== displayImage && (
-            <Image
+            <SafeImage
               src={displayHover}
+              fallbackSrc={displayImage}
               alt=""
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
@@ -67,22 +70,34 @@ export default function CollectionProductCard({ product }: CollectionProductCard
         )}
 
         <WishlistButton
-          productId={product.id}
-          productName={product.name}
+          product={{
+            id: product.id,
+            name: product.name,
+            image: displayImage,
+            price: product.price,
+            href: product.href,
+          }}
           variant="card"
           className={`absolute right-3 z-10 ${product.onSale ? "top-14" : "top-3"}`}
         />
 
         {/* Quick View overlay on hover */}
-        <div
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsQuickViewOpen(true);
+          }}
           className={`absolute bottom-0 left-0 right-0 z-20 flex h-[48px] items-center justify-center bg-black/90 transition-transform duration-300 ${
             isHovered ? "translate-y-0" : "translate-y-full"
           }`}
+          aria-label={`Quick view ${product.name}`}
         >
           <span className="text-[12px] font-bold uppercase tracking-[0.06em] text-white">
             Quick View
           </span>
-        </div>
+        </button>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -160,6 +175,12 @@ export default function CollectionProductCard({ product }: CollectionProductCard
           Add to Cart
         </button>
       </div>
+
+      <QuickViewModal
+        product={product}
+        isOpen={isQuickViewOpen}
+        onClose={() => setIsQuickViewOpen(false)}
+      />
     </article>
   );
 }

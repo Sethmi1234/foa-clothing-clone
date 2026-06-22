@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { shopTheLookImage } from "@/data/mockData";
 import { fadeIn } from "@/lib/animations";
@@ -16,14 +16,14 @@ export default function ShopTheLook() {
         viewport={{ once: true }}
         className="relative aspect-[9/16] w-full md:aspect-[16/9]"
       >
-        <Image
+        <SafeImage
           src={shopTheLookImage.mobile}
           alt="Shop the look"
           fill
           className="object-cover md:hidden"
           sizes="100vw"
         />
-        <Image
+        <SafeImage
           src={shopTheLookImage.desktop}
           alt="Shop the look"
           fill

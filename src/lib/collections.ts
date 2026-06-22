@@ -1,6 +1,23 @@
-import { collectionMeta, otherCollections } from "@/data/collections";
+import { allProducts, collectionMeta, otherCollections } from "@/data/collections";
 import { navigationData } from "@/data/navigation";
+import { pickFirstValidImage, resolveImageUrl, shopImage } from "@/lib/images";
+import { sanitizeProductImages } from "@/lib/productImages";
 import type { CollectionMeta } from "@/types";
+
+function productsForCollection(slug: string) {
+  return allProducts
+    .map(sanitizeProductImages)
+    .filter((product) => product.collections.includes(slug));
+}
+
+const knownGoodHeroes: Record<string, string> = {
+  men: shopImage("Mens_91b68e54-5157-486c-9c9e-6a2b661972f3.png?v=1761128934", 1920),
+  women: shopImage("web_1_a3b9b7ef-a9c0-43fc-83a0-139d1dcf9a32.png?v=1769071508", 1920),
+  footwear: shopImage("Shoes_2.jpg?v=1687365418", 1920),
+  shoes: shopImage("Shoes_2.jpg?v=1687365418", 1920),
+  accessories:
+    "https://cdn.shopify.com/s/files/1/0750/4415/9772/files/Accessories_b0d96e03-2e8e-432e-96ad-b724078cd445.png?v=1759915492",
+};
 
 const slugLabels: Record<string, string> = {
   men: "MENS",
@@ -106,11 +123,7 @@ export function getCollectionTitle(slug: string): string {
 }
 
 export function getCollectionMeta(slug: string): CollectionMeta {
-  if (collectionMeta[slug]) {
-    return collectionMeta[slug];
-  }
-
-  return {
+  const base = collectionMeta[slug] ?? {
     slug,
     title: getCollectionTitle(slug),
     displayTitle: getCollectionTitle(slug)
@@ -118,6 +131,28 @@ export function getCollectionMeta(slug: string): CollectionMeta {
       .replace(/\b\w/g, (c) => c.toUpperCase()),
     showHero: false,
   };
+
+  if (!base.showHero) {
+    return base;
+  }
+
+  const products = productsForCollection(slug);
+  const parent = getParentCategory(slug);
+  const parentProducts = parent ? productsForCollection(parent.slug) : [];
+  const heroImage = resolveImageUrl(
+    products[0]?.image ??
+      knownGoodHeroes[slug] ??
+      (parent ? knownGoodHeroes[parent.slug] : undefined) ??
+      parentProducts[0]?.image ??
+      base.heroImage,
+    pickFirstValidImage([
+      knownGoodHeroes.men,
+      knownGoodHeroes.women,
+      products[0]?.image,
+    ])
+  );
+
+  return { ...base, heroImage };
 }
 
 export function getParentCategory(slug: string): { slug: string; title: string } | null {

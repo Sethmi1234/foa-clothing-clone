@@ -17,4 +17,9 @@ export interface TopLevelCategory {
   url?: string;
   isSale?: boolean;
   columns?: NavColumn[];
+  promotion?: {
+    image: string;
+    href: string;
+    cta: string;
+  };
 }

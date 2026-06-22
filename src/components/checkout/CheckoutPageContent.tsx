@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -84,9 +84,7 @@ export default function CheckoutPageContent() {
       >
         <div className="absolute inset-0 bg-white/75" />
         <div className="relative mx-auto flex max-w-[1200px] items-center justify-center px-4 py-6 md:py-8">
-          <Link href="/" aria-label="FOA Clothing home">
-            <Logo variant="dark" className="[&_img]:h-8 [&_img]:w-auto md:[&_img]:h-10" />
-          </Link>
+          <Logo variant="dark" className="[&_img]:h-8 [&_img]:w-auto md:[&_img]:h-10" />
         </div>
       </header>
 
@@ -324,7 +322,7 @@ export default function CheckoutPageContent() {
                 return (
                   <li key={item.lineId} className="flex gap-4">
                     <div className="relative h-[64px] w-[64px] shrink-0 overflow-hidden rounded-[8px] border border-[#dedede] bg-white">
-                      <Image
+                      <SafeImage
                         src={item.image}
                         alt={item.name}
                         fill
