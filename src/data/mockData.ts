@@ -48,9 +48,28 @@ export const heroSlides: HeroSlide[] = [
   },
 ];
 
-export const newCollectionProducts: Product[] = sanitizedProducts.filter((p) =>
-  p.collections && Array.isArray(p.collections) && p.collections.includes("new")
+const newCollectionProductOrder = [
+  "neo-utility-short",
+  "flux-jogger",
+  "flux-oversize-tee",
+  "aero-tank-top",
+  "dead-rules-tee",
+  "unchained-tee",
+  "linear-tee",
+  "essential-tote-bag",
+  "loose-flared-jeans",
+  "carpenter-jeans",
+  "lovo-long-sleeve-jacket",
+  "foa-hydrojug",
+] as const;
+
+const newCollectionProductMap = new Map(
+  sanitizedProducts.map((product) => [product.id, product])
 );
+
+export const newCollectionProducts: Product[] = newCollectionProductOrder
+  .map((id) => newCollectionProductMap.get(id))
+  .filter((product): product is Product => Boolean(product));
 
 export const bestSellerProducts: Product[] = sanitizedProducts.filter((p) =>
   ["tees", "denim", "bags", "accessories"].includes(p.category)
@@ -127,30 +146,50 @@ export const footerData: FooterData = {
     title: "Follow Us",
     social: [
       { id: "social-facebook", label: "Facebook", href: "https://facebook.com/foaclothing" },
-      { id: "social-instagram", label: "Instagram", href: "https://instagram.com/foaclothing" },
-      { id: "social-youtube", label: "YouTube", href: "https://youtube.com/foaclothing" },
-      { id: "social-tiktok", label: "TikTok", href: "https://tiktok.com/@foaclothing" },
+      {
+        id: "social-instagram",
+        label: "Instagram",
+        href: "https://www.instagram.com/f.o.a_clothing/",
+      },
+      {
+        id: "social-youtube",
+        label: "YouTube",
+        href: "https://www.youtube.com/@FOASL-nn5uq",
+      },
+      { id: "social-tiktok", label: "TikTok", href: "https://www.tiktok.com/@foaclothing" },
     ],
   },
   support: {
     id: "footer-support",
     title: "Support",
     items: [
-      { id: "support-terms", label: "Terms and Conditions", href: "/pages/terms-and-conditions" },
-      { id: "support-privacy", label: "Privacy Policy", href: "/pages/privacy-policy" },
-      { id: "support-returns", label: "Return and Exchange Policy", href: "/pages/return-and-exchange-policy" },
-      { id: "support-shipping", label: "Shipping Policy", href: "/pages/shipping-policy" },
+      { id: "support-terms", label: "Terms and Conditions", href: "/policies/terms-of-service" },
+      { id: "support-privacy", label: "Privacy Policy", href: "/policies/privacy-policy" },
+      {
+        id: "support-returns",
+        label: "Return and Exchange Policy",
+        href: "/policies/refund-policy",
+      },
+      { id: "support-shipping", label: "Shipping Policy", href: "/policies/shipping-policy" },
     ],
   },
   info: {
     id: "footer-info",
     title: "Info",
     items: [
-      { id: "info-story", label: "Our Story", href: "/pages/our-story" },
-      { id: "info-contact", label: "Contact Us", href: "/pages/contact-us" },
-      { id: "info-careers", label: "Careers", href: "/pages/careers" },
-      { id: "info-training", label: "Training Dept", href: "/pages/training-dept" },
-      { id: "info-iron-island", label: "Strongest in the City", href: "/pages/iron-island-event-sign-up" },
+      { id: "info-story", label: "Our Story", href: "/pages/about" },
+      { id: "info-contact", label: "Contact Us", href: "/pages/get-in-touch" },
+      { id: "info-careers", label: "Careers", href: "/pages/job-board" },
+      {
+        id: "info-training",
+        label: "Training Dept",
+        href: "/pages/iron-island-2024-terms-and-conditions",
+      },
+      {
+        id: "info-iron-island",
+        label: "Strongest in the City",
+        href: "/pages/iron-island-event-sign-up",
+      },
     ],
   },
 };

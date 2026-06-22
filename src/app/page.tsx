@@ -12,7 +12,6 @@ export default function Home() {
     <>
       <HeroSlideshow />
       <NewCollection />
-      <SectionDivider />
       <CategoryGrid />
       <div className="h-12 w-full bg-white md:h-16" aria-hidden="true" />
       <ShopTheLook />

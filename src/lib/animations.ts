@@ -84,3 +84,8 @@ export const drawerOverlay: Variants = {
   visible: { opacity: 1, transition: { duration: 0.25 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
 };
+
+export const carouselSlide = {
+  duration: 0.5,
+  ease: [0.22, 1, 0.36, 1] as const,
+};

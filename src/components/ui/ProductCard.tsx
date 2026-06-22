@@ -31,7 +31,7 @@ export default function ProductCard({ product, showDetails = true }: ProductCard
   return (
     <motion.article
       variants={fadeIn}
-      className="product-card group flex min-w-[260px] flex-col md:min-w-0"
+      className="product-card group flex w-full flex-col"
     >
       <div
         className="relative mb-5 aspect-[4/5] overflow-hidden bg-[#f3f3f3]"

@@ -1,11 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 import Container from "@/components/ui/Container";
-import ProductCard from "@/components/ui/ProductCard";
+import ProductCarousel from "@/components/ui/ProductCarousel";
+import { useProductCarousel } from "@/hooks/useProductCarousel";
 import { bestSellerProducts, bestSellerTabs } from "@/data/mockData";
-import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function BestSellers() {
   const [activeTab, setActiveTab] = useState<(typeof bestSellerTabs)[number]>("Tees");
@@ -14,34 +13,30 @@ export default function BestSellers() {
     (p) => p.category === activeTab.toLowerCase()
   );
 
+  const carousel = useProductCarousel(filtered);
+
   return (
     <section className="py-12 md:py-16">
-      <Container>
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mb-8"
-        >
-          <h2 className="inline-block border-b-4 border-black pb-1 text-2xl font-semibold uppercase md:text-3xl">
+      <Container className="max-w-none px-6 md:px-[62px]">
+        <div className="mb-8 md:mb-9">
+          <h2 className="inline-block border-b-4 border-black pb-1 text-[38px] font-bold uppercase leading-none tracking-normal text-black md:text-[48px]">
             Best Sellers
           </h2>
-          <p className="mt-2 text-sm text-neutral-600">
+          <p className="mt-8 text-[21px] leading-none text-black">
             Shop some of our hottest products
           </p>
 
-          <div className="mt-4 flex flex-wrap items-center gap-1 text-sm">
+          <div className="mt-6 flex flex-wrap items-center gap-1 text-[19px] leading-none">
             {bestSellerTabs.map((tab, index) => (
               <span key={tab} className="flex items-center gap-1">
-                {index > 0 && <span className="text-neutral-300">/</span>}
+                {index > 0 && <span className="text-[#8e8e8e]">/</span>}
                 <button
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`uppercase tracking-wide transition-colors ${
+                  className={`uppercase transition-colors ${
                     activeTab === tab
-                      ? "font-semibold text-black underline underline-offset-4"
-                      : "text-neutral-400 hover:text-black"
+                      ? "font-bold text-black underline underline-offset-4"
+                      : "font-normal text-[#8e8e8e] hover:text-black"
                   }`}
                 >
                   {tab}
@@ -49,19 +44,9 @@ export default function BestSellers() {
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          key={activeTab}
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5"
-        >
-          {filtered.slice(0, 4).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </motion.div>
+        <ProductCarousel products={filtered} carousel={carousel} />
       </Container>
     </section>
   );

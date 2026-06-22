@@ -103,7 +103,7 @@ export const allProducts: Product[] = [
     ],
     href: "/products/dead-rules-tee",
     category: "tees",
-    collections: ["men", "tees", "printed-tees-1"],
+    collections: ["men", "tees", "printed-tees-1", "new"],
     sizes: ["XS", "S", "M", "L", "XL", "2XL"],
     colors: [
       { hex: "#1a2744", image: shopImage("60014301A.jpg?v=1774438598"), hoverImage: shopImage("60014302A.jpg?v=1774439477"), images: [shopImage("60014301A.jpg?v=1774438598"), shopImage("60014302A.jpg?v=1774439477"), shopImage("60014303A.jpg?v=1774439477")] },
@@ -125,7 +125,7 @@ export const allProducts: Product[] = [
     ],
     href: "/products/unchained-tee",
     category: "tees",
-    collections: ["men", "tees"],
+    collections: ["men", "tees", "new"],
     sizes: ["XS", "S", "M", "L", "XL", "2XL"],
     colors: [
       { hex: "#1a1a1a", image: shopImage("60014201A.jpg?v=1772541413"), hoverImage: shopImage("60014202A.jpg?v=1772612995"), images: [shopImage("60014201A.jpg?v=1772541413"), shopImage("60014202A.jpg?v=1772612995"), shopImage("60014203A.jpg?v=1772612995")] },
@@ -146,7 +146,7 @@ export const allProducts: Product[] = [
     ],
     href: "/products/linear-tee",
     category: "tees",
-    collections: ["men", "tees"],
+    collections: ["men", "tees", "new"],
     sizes: ["XS", "S", "M", "L", "XL", "2XL"],
     colors: [
       { hex: "#2c2c2c", image: shopImage("00012301A.jpg?v=1770036513"), hoverImage: shopImage("00012301B.jpg?v=1770036513"), images: [shopImage("00012301A.jpg?v=1770036513"), shopImage("00012301B.jpg?v=1770036513"), shopImage("00012301C.jpg?v=1770036513")] },
@@ -167,7 +167,7 @@ export const allProducts: Product[] = [
     ],
     href: "/products/loose-flared-jeans",
     category: "denim",
-    collections: ["men", "denim", "women", "womens-jeans"],
+    collections: ["men", "denim", "women", "womens-jeans", "new"],
     sizes: ["XS", "S", "M", "L", "XL", "2XL"],
     colors: [
       { hex: "#1a2744", image: shopImage("00011801A.jpg?v=1761150100"), hoverImage: shopImage("00011803A.jpg?v=1761214526"), images: [shopImage("00011801A.jpg?v=1761150100"), shopImage("00011803A.jpg?v=1761214526"), shopImage("00011802A.jpg?v=1761150100")] },
