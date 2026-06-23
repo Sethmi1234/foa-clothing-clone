@@ -14,6 +14,7 @@ export default function Home() {
       <NewCollection />
       <CategoryGrid />
       <ShopTheLook />
+      <div className="h-10 bg-white md:h-16" aria-hidden="true" />
       <CollectionShowcase />
       <SectionDivider />
       <BestSellers />

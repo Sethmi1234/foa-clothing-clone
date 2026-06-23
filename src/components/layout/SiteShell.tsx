@@ -18,6 +18,8 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
+  const isAuthPage = pathname === "/account/login" || pathname === "/account/register";
+
   return (
     <>
       <Header />
@@ -26,7 +28,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       <FloatingActions />
       <CartDrawer />
       <SearchDrawer />
-      <WishlistBar />
+      {!isAuthPage && <WishlistBar />}
       <PopupModal />
     </>
   );

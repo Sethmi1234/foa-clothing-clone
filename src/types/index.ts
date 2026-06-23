@@ -10,6 +10,7 @@ export type HeroSlide = {
 };
 
 export type ProductColor = {
+  name?: string;
   hex: string;
   image: string;
   hoverImage?: string;

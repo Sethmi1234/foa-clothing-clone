@@ -48,9 +48,12 @@ export default function RegisterPage() {
                   required
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="relative-input"
+                  className="peer w-full border border-[#e2e2e2] bg-white px-4 py-[1.125rem] pb-[0.625rem] text-[0.9375rem] leading-[1.4] text-[#151515] outline-none transition-colors focus:border-[#151515] placeholder:text-transparent"
                 />
-                <label htmlFor="RegisterFirstName" className="relative-label">
+                <label
+                  htmlFor="RegisterFirstName"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[0.9375rem] text-[#8e8e8e] transition-all peer-focus:top-[0.55rem] peer-focus:-translate-y-0 peer-focus:text-[0.6875rem] peer-focus:tracking-[0.02em] peer-not-placeholder-shown:top-[0.55rem] peer-not-placeholder-shown:-translate-y-0 peer-not-placeholder-shown:text-[0.6875rem] peer-not-placeholder-shown:tracking-[0.02em]"
+                >
                   First name
                 </label>
               </div>
@@ -65,9 +68,12 @@ export default function RegisterPage() {
                   required
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="relative-input"
+                  className="peer w-full border border-[#e2e2e2] bg-white px-4 py-[1.125rem] pb-[0.625rem] text-[0.9375rem] leading-[1.4] text-[#151515] outline-none transition-colors focus:border-[#151515] placeholder:text-transparent"
                 />
-                <label htmlFor="RegisterLastName" className="relative-label">
+                <label
+                  htmlFor="RegisterLastName"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[0.9375rem] text-[#8e8e8e] transition-all peer-focus:top-[0.55rem] peer-focus:-translate-y-0 peer-focus:text-[0.6875rem] peer-focus:tracking-[0.02em] peer-not-placeholder-shown:top-[0.55rem] peer-not-placeholder-shown:-translate-y-0 peer-not-placeholder-shown:text-[0.6875rem] peer-not-placeholder-shown:tracking-[0.02em]"
+                >
                   Last name
                 </label>
               </div>
@@ -84,9 +90,12 @@ export default function RegisterPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="relative-input"
+                  className="peer w-full border border-[#e2e2e2] bg-white px-4 py-[1.125rem] pb-[0.625rem] text-[0.9375rem] leading-[1.4] text-[#151515] outline-none transition-colors focus:border-[#151515] placeholder:text-transparent"
                 />
-                <label htmlFor="RegisterEmail" className="relative-label">
+                <label
+                  htmlFor="RegisterEmail"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[0.9375rem] text-[#8e8e8e] transition-all peer-focus:top-[0.55rem] peer-focus:-translate-y-0 peer-focus:text-[0.6875rem] peer-focus:tracking-[0.02em] peer-not-placeholder-shown:top-[0.55rem] peer-not-placeholder-shown:-translate-y-0 peer-not-placeholder-shown:text-[0.6875rem] peer-not-placeholder-shown:tracking-[0.02em]"
+                >
                   Email address
                 </label>
               </div>
@@ -101,9 +110,12 @@ export default function RegisterPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="relative-input"
+                  className="peer w-full border border-[#e2e2e2] bg-white px-4 py-[1.125rem] pb-[0.625rem] text-[0.9375rem] leading-[1.4] text-[#151515] outline-none transition-colors focus:border-[#151515] placeholder:text-transparent"
                 />
-                <label htmlFor="RegisterPassword" className="relative-label">
+                <label
+                  htmlFor="RegisterPassword"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[0.9375rem] text-[#8e8e8e] transition-all peer-focus:top-[0.55rem] peer-focus:-translate-y-0 peer-focus:text-[0.6875rem] peer-focus:tracking-[0.02em] peer-not-placeholder-shown:top-[0.55rem] peer-not-placeholder-shown:-translate-y-0 peer-not-placeholder-shown:text-[0.6875rem] peer-not-placeholder-shown:tracking-[0.02em]"
+                >
                   Password
                 </label>
               </div>
