@@ -24,6 +24,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       <CollectionPageClient
         products={products}
         sortLabel={slug === "sale" ? "Featured" : "Best Selling"}
+        initialSortBy={slug === "new-collection" ? "newest" : "best-selling"}
       />
       <OtherCollections groups={otherCollections} />
     </>

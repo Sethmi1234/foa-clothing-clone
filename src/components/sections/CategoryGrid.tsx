@@ -9,7 +9,7 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function CategoryGrid() {
   return (
-    <section className="bg-white pb-6 pt-2 md:pb-8 md:pt-4">
+    <section className="bg-white pb-10 pt-2 md:pt-4">
       <Container fullWidth>
         <motion.div
           variants={staggerContainer}

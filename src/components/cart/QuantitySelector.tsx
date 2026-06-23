@@ -18,8 +18,8 @@ export default function QuantitySelector({
 }: QuantitySelectorProps) {
   return (
     <div
-      className={`inline-flex items-center border border-[#e2e2e2] ${
-        compact ? "h-[34px]" : "h-[40px]"
+      className={`inline-flex items-center overflow-hidden border border-[#e2e2e2] ${
+        compact ? "h-[40px] rounded-full" : "h-[40px]"
       }`}
     >
       <button
@@ -39,7 +39,9 @@ export default function QuantitySelector({
           const nextValue = Number.parseInt(event.target.value, 10);
           if (!Number.isNaN(nextValue)) onChange(nextValue);
         }}
-        className="h-full w-10 border-x border-[#e2e2e2] bg-white text-center text-[13px] text-[#151515] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        className={`h-full w-10 bg-white text-center text-[13px] font-semibold text-[#151515] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${
+          compact ? "" : "border-x border-[#e2e2e2]"
+        }`}
         aria-label={`Quantity for ${label}`}
       />
       <button

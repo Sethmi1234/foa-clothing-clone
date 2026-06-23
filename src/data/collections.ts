@@ -1136,6 +1136,14 @@ export const collectionMeta: Record<string, CollectionMeta> = {
     heroOverlay: "rgba(0,0,0,0.35)",
     showHero: true,
   },
+  "new-collection": {
+    slug: "new-collection",
+    title: "NEW COLLECTION",
+    displayTitle: "New Collection",
+    heroImage: shopImage("00012701A.jpg?v=1778250510", 1920),
+    heroOverlay: "rgba(0,0,0,0.35)",
+    showHero: true,
+  },
   // --- Men's Sub-Categories ---
   tees: {
     slug: "tees",

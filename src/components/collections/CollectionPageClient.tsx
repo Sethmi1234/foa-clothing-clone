@@ -18,11 +18,13 @@ type FilterState = {
 type CollectionPageClientProps = {
   products: Product[];
   sortLabel?: string;
+  initialSortBy?: string;
 };
 
 export default function CollectionPageClient({
   products,
   sortLabel = "Best Selling",
+  initialSortBy = "best-selling",
 }: CollectionPageClientProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -31,14 +33,14 @@ export default function CollectionPageClient({
     sizes: [],
     priceMin: 0,
     priceMax: Infinity,
-    sortBy: "best-selling",
+    sortBy: initialSortBy,
   });
 
   const sortOptions = [
     { value: "best-selling", label: "Best Selling" },
     { value: "price-asc", label: "Price: Low to High" },
     { value: "price-desc", label: "Price: High to Low" },
-    { value: "newest", label: "Newest" },
+    { value: "newest", label: "Date, New To Old" },
     { value: "a-z", label: "Alphabetically: A-Z" },
     { value: "z-a", label: "Alphabetically: Z-A" },
   ];

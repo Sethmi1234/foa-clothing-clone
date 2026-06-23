@@ -4,6 +4,14 @@ import { sanitizeProductImages } from "@/lib/productImages";
 
 const products = allProducts.map(sanitizeProductImages);
 
+const collectionAliases: Record<string, string> = {
+  "new-collection": "new",
+};
+
+function resolveCollectionSlug(slug: string): string {
+  return collectionAliases[slug] ?? slug;
+}
+
 export function getProductById(id: string): Product | undefined {
   return products.find((product) => product.id === id);
 }
@@ -13,7 +21,9 @@ export function getAllProducts(): Product[] {
 }
 
 export function getProductsByCollection(slug: string): Product[] {
-  return products.filter((product) => product.collections.includes(slug));
+  const resolvedSlug = resolveCollectionSlug(slug);
+
+  return products.filter((product) => product.collections.includes(resolvedSlug));
 }
 
 export function getRelatedProducts(productId: string, limit = 4): Product[] {

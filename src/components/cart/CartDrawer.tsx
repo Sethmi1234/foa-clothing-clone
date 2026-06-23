@@ -7,10 +7,58 @@ import { useState } from "react";
 import CartEmptyState from "@/components/cart/CartEmptyState";
 import CartLineItem from "@/components/cart/CartLineItem";
 import CartTermsCheckbox from "@/components/cart/CartTermsCheckbox";
+import { HeartIcon } from "@/components/icons/HeartIcon";
 import { SidePanelCloseIcon } from "@/components/icons/SidePanelCloseIcon";
+import SafeImage from "@/components/ui/SafeImage";
 import { useCart } from "@/context/CartContext";
 import { formatCartPrice } from "@/lib/cart";
 import { drawerOverlay, slideInFromRight } from "@/lib/animations";
+import { newCollectionProducts } from "@/data/mockData";
+import type { Product } from "@/types";
+
+function CartRecommendationCard({ product }: { product: Product }) {
+  return (
+    <article className="mb-7 text-center last:mb-0">
+      <Link href={product.href} className="group block">
+        <div className="relative mx-auto mb-4 aspect-[2/3] w-[122px] bg-white">
+          <SafeImage
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="122px"
+            className="object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+          <span className="absolute -right-3 top-14 flex h-8 w-8 items-center justify-center rounded-full bg-black text-white">
+            <HeartIcon filled className="h-5 w-5" />
+          </span>
+        </div>
+        <h3 className="text-[15px] font-semibold uppercase leading-tight text-[#151515]">
+          {product.name}
+        </h3>
+        <p className="mt-1 text-[18px] font-semibold text-[#151515]">
+          {formatCartPrice(product.price)}
+        </p>
+      </Link>
+      <div className="mx-auto mt-2 max-w-[156px] text-[15px] font-semibold leading-[1.7] text-[#8a8a8a]">
+        <p>3 X {formatCartPrice(product.price / 3)} or</p>
+        <p>4.5% Cashback with</p>
+        <span className="mx-auto my-1 flex h-[25px] w-[74px] items-center justify-center rounded-full bg-[#092942] px-2 py-1 text-[11px] font-bold italic leading-none text-white">
+          mintpay
+        </span>
+        <p>or pay in 3 x {formatCartPrice(product.price / 3)} with</p>
+        <span className="text-[20px] font-bold leading-none text-[#6766ff] [text-shadow:1px_0_0_#ff6bc7]">
+          KOKO
+        </span>
+      </div>
+      <Link
+        href={product.href}
+        className="mt-8 inline-block border-b border-[#151515] pb-1 text-[14px] uppercase leading-none text-[#151515]"
+      >
+        Quick View
+      </Link>
+    </article>
+  );
+}
 
 export default function CartDrawer() {
   const router = useRouter();
@@ -28,6 +76,9 @@ export default function CartDrawer() {
   } = useCart();
   const [showOrderNote, setShowOrderNote] = useState(false);
   const [draftNote, setDraftNote] = useState(orderNote);
+  const recommendedProducts = newCollectionProducts
+    .filter((product) => !items.some((item) => item.productId === product.id))
+    .slice(0, 4);
 
   const handleCheckout = () => {
     if (!termsAccepted || items.length === 0) return;
@@ -55,86 +106,99 @@ export default function CartDrawer() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed inset-y-0 right-0 z-[90] flex w-[calc(100vw-30px)] max-w-[480px] flex-col bg-white shadow-2xl"
+            className="fixed inset-y-0 right-0 z-[90] flex w-[calc(100vw-16px)] max-w-[824px] bg-white shadow-2xl"
             aria-label="Cart"
           >
-            <div className="flex items-center justify-between border-b border-[#e2e2e2] px-6 py-5">
-              <h2 className="text-[18px] font-normal text-[#151515]">Cart</h2>
-              <button
-                type="button"
-                onClick={closeDrawer}
-                className="text-[#151515] transition-opacity hover:opacity-70"
-                aria-label="Close cart panel"
-              >
-                <SidePanelCloseIcon />
-              </button>
-            </div>
+            {recommendedProducts.length > 0 && (
+              <aside className="hidden w-[205px] shrink-0 overflow-y-auto bg-[#f4f4f4] px-5 py-5 lg:block">
+                <h2 className="mb-5 text-center text-[16px] font-bold uppercase leading-tight tracking-[0.04em] text-[#151515]">
+                  You May Also
+                  <br />
+                  Like
+                </h2>
+                {recommendedProducts.map((product) => (
+                  <CartRecommendationCard key={product.id} product={product} />
+                ))}
+              </aside>
+            )}
 
-            <div className="flex-1 overflow-y-auto px-6">
-              {items.length === 0 ? (
-                <CartEmptyState />
-              ) : (
-                <div className="py-2">
-                  {items.map((item) => (
-                    <CartLineItem
-                      key={item.lineId}
-                      item={item}
-                      variant="drawer"
-                      onQuantityChange={updateQuantity}
-                      onRemove={removeItem}
+            <div className="flex min-w-0 flex-1 flex-col bg-white">
+              <div className="flex h-[88px] items-center justify-between border-b border-[#e2e2e2] px-9">
+                <h2 className="text-[20px] font-semibold uppercase tracking-[0.16em] text-[#151515]">Cart</h2>
+                <button
+                  type="button"
+                  onClick={closeDrawer}
+                  className="text-[#151515] transition-opacity hover:opacity-70"
+                  aria-label="Close cart panel"
+                >
+                  <SidePanelCloseIcon />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto px-9">
+                {items.length === 0 ? (
+                  <CartEmptyState />
+                ) : (
+                  <div className="py-8">
+                    {items.map((item) => (
+                      <CartLineItem
+                        key={item.lineId}
+                        item={item}
+                        variant="drawer"
+                        onQuantityChange={updateQuantity}
+                        onRemove={removeItem}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {items.length > 0 && (
+                <div className="border-t border-[#e2e2e2] bg-white pb-6">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDraftNote(orderNote);
+                      setShowOrderNote(true);
+                    }}
+                    className="flex w-full items-center justify-between border-b border-[#e2e2e2] px-9 py-4 text-left text-[19px] text-[#151515]"
+                  >
+                    Add order note
+                    <span className="text-2xl leading-none">+</span>
+                  </button>
+
+                  <div className="px-9 pt-6">
+                    <p className="mb-3 text-center text-[16px] tracking-[0.02em] text-[#343434]">
+                      Taxes and shipping calculated at checkout
+                    </p>
+
+                    <CartTermsCheckbox
+                      id="CartTerms-Drawer"
+                      checked={termsAccepted}
+                      onChange={setTermsAccepted}
+                      className="mb-5 justify-center text-[16px]"
                     />
-                  ))}
+
+                    <button
+                      type="button"
+                      onClick={handleCheckout}
+                      disabled={!termsAccepted}
+                      className="mb-4 flex h-[60px] w-full items-center justify-center rounded-full bg-[#151515] text-[17px] font-bold uppercase text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      Checkout <span className="mx-2 font-bold">•</span> {formatCartPrice(subtotal)}
+                    </button>
+
+                    <Link
+                      href="/cart"
+                      onClick={closeDrawer}
+                      className="block text-center text-[16px] font-medium uppercase text-[#151515] underline underline-offset-4"
+                    >
+                      View Cart
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
-
-            {items.length > 0 && (
-              <div className="border-t border-[#e2e2e2] bg-white px-6 pb-8 pt-4 md:pb-6">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDraftNote(orderNote);
-                    setShowOrderNote(true);
-                  }}
-                  className="mb-4 flex w-full items-center justify-between border-b border-[#e2e2e2] py-3 text-left text-[14px] text-[#151515]"
-                >
-                  Add order note
-                  <span className="text-lg leading-none">+</span>
-                </button>
-
-                <p className="mb-3 text-center text-[12px] tracking-[0.02em] text-neutral-500">
-                  Taxes and{" "}
-                  <Link href="/policies/shipping-policy" className="underline underline-offset-2">
-                    shipping
-                  </Link>{" "}
-                  calculated at checkout
-                </p>
-
-                <CartTermsCheckbox
-                  id="CartTerms-Drawer"
-                  checked={termsAccepted}
-                  onChange={setTermsAccepted}
-                  className="mb-4"
-                />
-
-                <button
-                  type="button"
-                  onClick={handleCheckout}
-                  disabled={!termsAccepted}
-                  className="mb-3 flex h-[48px] w-full items-center justify-center rounded-full bg-[#151515] text-[12px] font-medium uppercase tracking-[0.12em] text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  Checkout <span className="mx-2 font-bold">•</span> {formatCartPrice(subtotal)}
-                </button>
-
-                <Link
-                  href="/cart"
-                  onClick={closeDrawer}
-                  className="block text-center text-[12px] font-medium uppercase tracking-[0.08em] text-[#151515] underline underline-offset-4"
-                >
-                  View Cart
-                </Link>
-              </div>
-            )}
 
             <AnimatePresence>
               {showOrderNote && (

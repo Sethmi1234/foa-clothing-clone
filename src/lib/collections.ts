@@ -5,9 +5,11 @@ import { sanitizeProductImages } from "@/lib/productImages";
 import type { CollectionMeta } from "@/types";
 
 function productsForCollection(slug: string) {
+  const resolvedSlug = slug === "new-collection" ? "new" : slug;
+
   return allProducts
     .map(sanitizeProductImages)
-    .filter((product) => product.collections.includes(slug));
+    .filter((product) => product.collections.includes(resolvedSlug));
 }
 
 const knownGoodHeroes: Record<string, string> = {
@@ -26,6 +28,7 @@ const slugLabels: Record<string, string> = {
   footwear: "FOOTWEAR",
   "e-voucher": "E-VOUCHER",
   sale: "SALE",
+  "new-collection": "NEW COLLECTION",
   tees: "TEES",
   "printed-tees-1": "PRINTED TEES",
   tanks: "TANKS",
