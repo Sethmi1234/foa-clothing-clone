@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import { heroSlides } from "@/data/mockData";
-import { heroTextReveal } from "@/lib/animations";
+import { heroImageCrossFade, heroTextReveal, slideUpFade } from "@/lib/animations";
 
 export default function HeroSlideshow() {
   const [current, setCurrent] = useState(0);
@@ -29,8 +29,9 @@ export default function HeroSlideshow() {
         <motion.div
           key={s.id}
           className="absolute inset-0"
-          animate={{ opacity: index === current ? 1 : 0 }}
-          transition={{ duration: 1, ease: "easeInOut" }}
+          variants={heroImageCrossFade}
+          initial="hidden"
+          animate={index === current ? "visible" : "hidden"}
           style={{ zIndex: index === current ? 2 : 1 }}
           aria-hidden={index !== current}
         >
@@ -58,10 +59,10 @@ export default function HeroSlideshow() {
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
+            variants={slideUpFade}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="flex flex-col items-center gap-7"
           >
             <motion.h1

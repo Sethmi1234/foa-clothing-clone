@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { CloseIcon } from "@/components/icons/CloseIcon";
+import { modalOverlay, modalPopIn } from "@/lib/animations";
 
 type SizeChartModalProps = {
   isOpen: boolean;
@@ -34,17 +35,18 @@ export default function SizeChartModal({ isOpen, onClose }: SizeChartModalProps)
       {isOpen && (
         <>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={modalOverlay}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="fixed inset-0 z-[90] bg-black/50"
             onClick={onClose}
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            variants={modalPopIn}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="fixed inset-4 z-[100] mx-auto my-auto flex max-h-[90vh] max-w-[700px] flex-col overflow-y-auto bg-white p-6 md:inset-auto md:p-10"
           >
             <div className="mb-6 flex items-center justify-between">

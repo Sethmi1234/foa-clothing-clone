@@ -2,6 +2,13 @@
 
 import { useState } from "react";
 import { HeartIcon } from "@/components/icons/HeartIcon";
+import {
+  CareGuideIcon,
+  CopyLinkIcon,
+  DeliveryTruckIcon,
+  SizeChartIcon,
+  WhatsAppIcon,
+} from "@/components/icons/UtilityIcons";
 import Accordion from "@/components/shared/Accordion";
 import { eVoucherDenominations, eVoucherDescription } from "@/data/eVoucher";
 import { useCart } from "@/context/CartContext";
@@ -63,9 +70,7 @@ export default function EVoucherDetails() {
           type="button"
           className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.06em] text-black"
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M2 14V4L8 1L14 4V14H2Z" stroke="currentColor" strokeWidth="1.2" />
-          </svg>
+          <SizeChartIcon />
           Size Chart
         </button>
       </div>
@@ -134,34 +139,19 @@ export default function EVoucherDetails() {
 
       <div className="space-y-3 border-t border-neutral-200 pt-6 text-[13px] text-neutral-600">
         <p className="flex items-center gap-2">
-          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
-            <path
-              d="M1 4H12L15 7V11H3C1.9 11 1 10.1 1 9V4Z"
-              stroke="currentColor"
-              strokeWidth="1.2"
-            />
-            <circle cx="5" cy="11" r="1.5" fill="currentColor" />
-            <circle cx="12" cy="11" r="1.5" fill="currentColor" />
-          </svg>
+          <DeliveryTruckIcon />
           Free shipping for orders above Rs.9999.00
         </p>
         <button type="button" className="flex items-center gap-2 hover:text-black">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M5 7H11M5 10H9" stroke="currentColor" strokeWidth="1.2" />
-          </svg>
+          <CareGuideIcon />
           Care Guide
         </button>
         <div className="flex gap-4 pt-2">
           <button type="button" aria-label="Share on WhatsApp" className="hover:opacity-70">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
-              <path d="M9 1C4.58 1 1 4.58 1 9c0 1.57.46 3.03 1.26 4.26L1 17l3.87-1.01A7.94 7.94 0 009 17c4.42 0 8-3.58 8-8s-3.58-8-8-8z" />
-            </svg>
+            <WhatsAppIcon />
           </button>
           <button type="button" aria-label="Copy link" className="hover:opacity-70">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M7 10L11 6M8 5h3v3M6 13H4V4h9v2" stroke="currentColor" strokeWidth="1.2" />
-            </svg>
+            <CopyLinkIcon />
           </button>
         </div>
       </div>

@@ -20,6 +20,7 @@ import {
   UnionPayIcon,
   VisaIcon,
 } from "@/components/icons/PaymentIcons";
+import { NewsletterArrowIcon } from "@/components/icons/UtilityIcons";
 import { footerData } from "@/data/mockData";
 
 const socialIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -113,10 +114,10 @@ export default function Footer() {
               <p className="mb-0 text-[15px] leading-relaxed text-white">
                 Be the first to know about our new collections and promotions
               </p>
-              <div className="signup-container">
+              <div className="">
                 <form className="relative">
                   <fieldset className="relative border-0 p-0">
-                    <div className="thb-field thb-field-dark relative">
+                    <div className="relative relative">
                       <input
                         type="email"
                         id="footer-newsletter-email"
@@ -124,12 +125,12 @@ export default function Footer() {
                         placeholder=" "
                         required
                         autoComplete="email"
-                        className="thb-field-input thb-field-input-dark pr-10"
+                        className="peer w-full border border-[#444] bg-transparent px-4 py-[1.125rem] pb-[0.625rem] pr-10 text-[0.9375rem] leading-[1.4] text-white outline-none transition-colors focus:border-white placeholder:text-transparent"
                         aria-label="Email address"
                       />
                       <label
                         htmlFor="footer-newsletter-email"
-                        className="thb-field-label thb-field-label-dark"
+                        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[0.9375rem] text-white/50 transition-all peer-focus:top-[0.55rem] peer-focus:-translate-y-0 peer-focus:text-[0.6875rem] peer-focus:tracking-[0.02em] peer-focus:text-white/70 peer-not-placeholder-shown:top-[0.55rem] peer-not-placeholder-shown:-translate-y-0 peer-not-placeholder-shown:text-[0.6875rem] peer-not-placeholder-shown:tracking-[0.02em] peer-not-placeholder-shown:text-white/70"
                       >
                         Email
                       </label>
@@ -138,22 +139,7 @@ export default function Footer() {
                         className="absolute bottom-0 right-0 flex h-full max-h-[52px] w-10 items-center justify-center text-white transition-opacity hover:opacity-60"
                         aria-label="Subscribe to newsletter"
                       >
-                        <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true">
-                          <path
-                            d="M0.799805 5.5H12.7998"
-                            stroke="currentColor"
-                            strokeWidth="1.2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M9.49976 1L13.9998 5.5L9.49976 10"
-                            stroke="currentColor"
-                            strokeWidth="1.2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                        <NewsletterArrowIcon />
                       </button>
                     </div>
                   </fieldset>
@@ -202,12 +188,12 @@ export default function Footer() {
       <div className="sub-footer mt-10 text-white">
         <div className="mx-auto max-w-[1440px] px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-12">
-            <div className="hidden md:col-span-8 md:block" />
-            <div className="md:col-span-4">
-              <div className="mb-9 flex flex-wrap items-center justify-start gap-[5px] md:mb-6 md:justify-end">
+            <div className="hidden md:col-span-6 md:block" />
+            <div className="min-w-0 md:col-span-6">
+              <div className="mb-9 flex flex-nowrap items-center justify-start gap-1.5 overflow-x-auto md:mb-6 md:justify-end md:overflow-visible">
                 {paymentMethods.map(({ label, Icon }) => (
-                  <figure key={label} className="m-0 inline-flex" aria-label={label}>
-                    <Icon className="h-6 w-[38px]" />
+                  <figure key={label} className="m-0 inline-flex shrink-0" aria-label={label}>
+                    <Icon className="h-7 w-[44px]" />
                   </figure>
                 ))}
               </div>
@@ -231,3 +217,4 @@ export default function Footer() {
     </footer>
   );
 }
+

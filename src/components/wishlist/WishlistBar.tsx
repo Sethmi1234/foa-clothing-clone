@@ -7,7 +7,7 @@ import { CloseIcon } from "@/components/icons/CloseIcon";
 import { HeartIcon } from "@/components/icons/HeartIcon";
 import SafeImage from "@/components/ui/SafeImage";
 import { useWishlist } from "@/context/WishlistContext";
-import { slideDownFromTop } from "@/lib/animations";
+import { fadeScale, slideDownFromTop } from "@/lib/animations";
 
 export default function WishlistBar() {
   const pathname = usePathname();
@@ -23,10 +23,10 @@ export default function WishlistBar() {
         {!isDrawerOpen && count > 0 && (
           <motion.button
             type="button"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
+            variants={fadeScale}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             onClick={openDrawer}
             className="fixed right-[30px] top-[115px] z-[48] flex h-[50px] w-[50px] items-center justify-center rounded-full border border-neutral-200 bg-[#f3f3f3] shadow-[0_15px_110px_rgba(0,0,0,0.03)] transition-transform hover:scale-105"
             aria-label="Open wishlist"

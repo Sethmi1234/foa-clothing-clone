@@ -1,0 +1,103 @@
+import SafeImage from "@/components/ui/SafeImage";
+import { formatCartPrice } from "@/lib/cart";
+import type { CartItem } from "@/types";
+
+type OrderSummaryProps = {
+  items: CartItem[];
+  orderNote: string;
+  itemCountLabel: string;
+  subtotal: number;
+  shippingCost: number;
+  total: number;
+  city: string;
+  isMobileOpen: boolean;
+};
+
+function getVariantLabel(color?: string, size?: string) {
+  return [color, size].filter(Boolean).join(" / ");
+}
+
+export default function OrderSummary({
+  items,
+  orderNote,
+  itemCountLabel,
+  subtotal,
+  shippingCost,
+  total,
+  city,
+  isMobileOpen,
+}: OrderSummaryProps) {
+  return (
+    <aside
+      className={`bg-[#f7f7f7] px-4 py-8 md:px-8 md:py-10 ${
+        isMobileOpen ? "block" : "hidden lg:block"
+      }`}
+    >
+      <div className="mx-auto max-w-[380px]">
+        <h2 className="mb-6 text-[18px] font-semibold text-[#151515] lg:sr-only">
+          Order summary
+        </h2>
+
+        <ul className="space-y-5">
+          {items.map((item) => {
+            const variantLabel = getVariantLabel(item.color, item.size);
+            return (
+              <li key={item.lineId} className="flex gap-4">
+                <div className="relative h-[64px] w-[64px] shrink-0 overflow-hidden rounded-[8px] border border-[#dedede] bg-white">
+                  <SafeImage
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes="64px"
+                    className="object-cover object-center"
+                  />
+                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#707070] text-[11px] font-medium text-white">
+                    {item.quantity}
+                  </span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[14px] font-medium text-[#151515]">{item.name}</p>
+                  {variantLabel && (
+                    <p className="mt-1 text-[12px] uppercase tracking-[0.02em] text-neutral-500">
+                      {variantLabel}
+                    </p>
+                  )}
+                </div>
+                <p className="text-[14px] font-medium text-[#151515]">
+                  {formatCartPrice(item.price * item.quantity)}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+
+        {orderNote && (
+          <div className="mt-6 border-t border-[#dedede] pt-4">
+            <p className="mb-1 text-[12px] font-medium uppercase tracking-[0.06em] text-neutral-500">
+              Order note
+            </p>
+            <p className="text-[13px] leading-relaxed text-[#151515]">{orderNote}</p>
+          </div>
+        )}
+
+        <div className="mt-6 space-y-3 border-t border-[#dedede] pt-4 text-[14px]">
+          <div className="flex items-center justify-between">
+            <span className="text-neutral-600">Subtotal · {itemCountLabel}</span>
+            <span>{formatCartPrice(subtotal)}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-neutral-600">Shipping</span>
+            <span>{city ? (shippingCost === 0 ? "Free" : formatCartPrice(shippingCost)) : "-"}</span>
+          </div>
+          <div className="flex items-center justify-between border-t border-[#dedede] pt-4 text-[18px] font-semibold">
+            <span>Total</span>
+            <span>
+              <span className="mr-2 text-[12px] font-normal text-neutral-500">LKR</span>
+              {formatCartPrice(total)}
+            </span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}

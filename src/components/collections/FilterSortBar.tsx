@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { ChevronDownIcon } from "@/components/icons/ChevronDownIcon";
 import { CloseIcon } from "@/components/icons/CloseIcon";
+import { FilterIcon } from "@/components/icons/UtilityIcons";
 import FilterDrawer from "./FilterDrawer";
 import type { Product } from "@/types";
 
@@ -117,12 +118,7 @@ export default function FilterSortBar({
             onClick={() => setIsDrawerOpen(true)}
             className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.04em] text-black hover:opacity-70"
           >
-            <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
-              <path d="M0 1H18M3 7H15M5 13H13" stroke="currentColor" strokeWidth="1.2" />
-              <circle cx="6" cy="1" r="1.5" fill="currentColor" />
-              <circle cx="12" cy="7" r="1.5" fill="currentColor" />
-              <circle cx="9" cy="13" r="1.5" fill="currentColor" />
-            </svg>
+            <FilterIcon />
             Filter and Sort
             {activeFilterCount > 0 && (
               <span className="flex h-4 w-4 items-center justify-center rounded-full bg-black text-[9px] font-bold text-white">

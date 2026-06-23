@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { announcementMessages } from "@/data/mockData";
 import { useCart } from "@/context/CartContext";
+import { quickFade } from "@/lib/animations";
 
 const FREE_SHIPPING_THRESHOLD = 9999;
 
@@ -24,15 +25,15 @@ export default function AnnouncementBar({ scrolled = false }: AnnouncementBarPro
       {scrolled ? (
         <motion.div
           key={hasFreeShipping ? "free-shipping" : "scrolled"}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          variants={quickFade}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           className="relative z-[60] flex h-[34px] items-center justify-center bg-[#faf6f4] text-black"
         >
           {hasFreeShipping ? (
             <p className="text-[11px] font-normal uppercase leading-none tracking-[0.02em] md:text-[12px]">
-              CONGRATULATIONS! You've got free shipping
+              CONGRATULATIONS! You&apos;ve got free shipping
             </p>
           ) : (
             <p className="text-[11px] font-normal uppercase leading-none tracking-[0.02em] md:text-[12px]">
@@ -44,10 +45,10 @@ export default function AnnouncementBar({ scrolled = false }: AnnouncementBarPro
       ) : (
         <motion.div
           key="marquee"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          variants={quickFade}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           className="relative z-[60] overflow-hidden bg-foa-black text-white"
         >
           <div

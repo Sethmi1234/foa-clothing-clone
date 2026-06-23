@@ -28,8 +28,8 @@ export default function RegisterPage() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-[1440px] px-4">
-        <div className="thb-form-container py-10 md:py-[70px] lg:py-[100px]">
-          <div className="thb-login-form mx-auto w-full max-w-[640px] md:px-[30px] lg:px-[60px]">
+        <div className="flex flex-col py-10 md:py-[70px] lg:py-[100px]">
+          <div className=" mx-auto w-full max-w-[640px] md:px-[30px] lg:px-[60px]">
             <form className="space-y-2.5" onSubmit={handleSubmit}>
               <h4 className="mb-2.5 text-center text-[18px] font-bold uppercase tracking-wide text-[#151515]">
                 Create account
@@ -38,7 +38,7 @@ export default function RegisterPage() {
                 Join us and get exclusive access to new collections and promotions.
               </p>
 
-              <div className="thb-field">
+              <div className="relative">
                 <input
                   type="text"
                   id="RegisterFirstName"
@@ -48,14 +48,14 @@ export default function RegisterPage() {
                   required
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="thb-field-input"
+                  className="relative-input"
                 />
-                <label htmlFor="RegisterFirstName" className="thb-field-label">
+                <label htmlFor="RegisterFirstName" className="relative-label">
                   First name
                 </label>
               </div>
 
-              <div className="thb-field">
+              <div className="relative">
                 <input
                   type="text"
                   id="RegisterLastName"
@@ -65,14 +65,14 @@ export default function RegisterPage() {
                   required
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="thb-field-input"
+                  className="relative-input"
                 />
-                <label htmlFor="RegisterLastName" className="thb-field-label">
+                <label htmlFor="RegisterLastName" className="relative-label">
                   Last name
                 </label>
               </div>
 
-              <div className="thb-field">
+              <div className="relative">
                 <input
                   type="email"
                   id="RegisterEmail"
@@ -84,14 +84,14 @@ export default function RegisterPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="thb-field-input"
+                  className="relative-input"
                 />
-                <label htmlFor="RegisterEmail" className="thb-field-label">
+                <label htmlFor="RegisterEmail" className="relative-label">
                   Email address
                 </label>
               </div>
 
-              <div className="thb-field">
+              <div className="relative">
                 <input
                   type="password"
                   id="RegisterPassword"
@@ -101,20 +101,20 @@ export default function RegisterPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="thb-field-input"
+                  className="relative-input"
                 />
-                <label htmlFor="RegisterPassword" className="thb-field-label">
+                <label htmlFor="RegisterPassword" className="relative-label">
                   Password
                 </label>
               </div>
 
-              <button type="submit" className="thb-button-full mt-2.5">
+              <button type="submit" className="flex h-[52px] w-full items-center justify-center border border-[#151515] bg-[#151515] px-6 py-[0.95rem] text-[0.8125rem] font-semibold uppercase tracking-[0.06em] text-white transition-opacity hover:opacity-85 mt-2.5">
                 <span>Create account</span>
               </button>
 
               <div className="switch-login-section mt-[15px] text-center text-[14px] leading-[1.75]">
                 Already have an account?{" "}
-                <Link href="/account/login" className="thb-text-button">
+                <Link href="/account/login" className="inline text-[#151515] underline underline-offset-[3px] hover:opacity-70">
                   Log in
                 </Link>
               </div>

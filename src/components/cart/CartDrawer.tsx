@@ -12,7 +12,7 @@ import { SidePanelCloseIcon } from "@/components/icons/SidePanelCloseIcon";
 import SafeImage from "@/components/ui/SafeImage";
 import { useCart } from "@/context/CartContext";
 import { formatCartPrice } from "@/lib/cart";
-import { drawerOverlay, slideInFromRight } from "@/lib/animations";
+import { bottomSheetSlide, drawerOverlay, quickFade, slideInFromRight } from "@/lib/animations";
 import { newCollectionProducts } from "@/data/mockData";
 import type { Product } from "@/types";
 
@@ -205,18 +205,19 @@ export default function CartDrawer() {
                 <>
                   <motion.button
                     type="button"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    variants={quickFade}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
                     className="fixed inset-0 z-[91] bg-black/30"
                     onClick={() => setShowOrderNote(false)}
                     aria-label="Close order note"
                   />
                   <motion.div
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "100%" }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    variants={bottomSheetSlide}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
                     className="absolute inset-x-0 bottom-0 z-[92] bg-white p-6 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]"
                   >
                     <label htmlFor="mini-cart-notes" className="mb-2 block text-[13px] font-medium text-[#151515]">

@@ -44,7 +44,7 @@ export default function OrdersPage() {
             </p>
             <Link
               href="/collections/men"
-              className="thb-button-full inline-flex"
+              className="flex h-[52px] w-full items-center justify-center border border-[#151515] bg-[#151515] px-6 py-[0.95rem] text-[0.8125rem] font-semibold uppercase tracking-[0.06em] text-white transition-opacity hover:opacity-85 inline-flex"
             >
               <span>Start shopping</span>
             </Link>

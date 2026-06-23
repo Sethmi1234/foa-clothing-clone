@@ -1,31 +1,54 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
+import CarouselArrows from "@/components/ui/CarouselArrows";
+import { CollectionArrowIcon } from "@/components/icons/UtilityIcons";
+import { carouselSlide } from "@/lib/animations";
 import type { OtherCollectionGroup } from "@/types";
 
 type OtherCollectionsProps = {
   groups: OtherCollectionGroup[];
 };
 
-function CollectionArrow() {
-  return (
-    <svg
-      width="17"
-      height="12"
-      viewBox="0 0 17 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="shrink-0"
-      aria-hidden="true"
-    >
-      <path
-        d="M11.7526 0.46967C11.4597 0.176777 10.9848 0.176777 10.6919 0.46967C10.399 0.762563 10.399 1.23744 10.6919 1.53033L15.6919 6.53033L10.6919 10.4697C10.399 10.7626 10.399 11.2374 10.6919 11.5303C10.9848 11.8232 11.4597 11.8232 11.7526 11.5303L16.7526 6.53033C16.8932 6.38968 16.9722 6.19891 16.9722 6C16.9722 5.80109 16.8932 5.61032 16.7526 5.46967L11.7526 0.46967Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
 export default function OtherCollections({ groups }: OtherCollectionsProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const visibleCount = containerWidth < 768 ? 1 : 3;
+  const gap = containerWidth >= 1024 ? 32 : containerWidth >= 768 ? 24 : 40;
+  const slideWidth = containerWidth
+    ? (containerWidth - gap * (visibleCount - 1)) / visibleCount
+    : 0;
+  const arrowTop = slideWidth ? slideWidth * (9 / 32) : undefined;
+  const maxIndex = Math.max(0, groups.length - visibleCount);
+  const canGoPrev = currentIndex > 0;
+  const canGoNext = currentIndex < maxIndex;
+  const translateX = -(currentIndex * (slideWidth + gap));
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+
+    const updateWidth = () => setContainerWidth(node.offsetWidth);
+    updateWidth();
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  }, []);
+
+  const goNext = useCallback(() => {
+    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+  }, [maxIndex]);
+
   return (
     <section className="border-b border-t border-neutral-200 bg-white py-12 md:py-16">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
@@ -33,34 +56,56 @@ export default function OtherCollections({ groups }: OtherCollectionsProps) {
           OTHER COLLECTIONS
         </h2>
 
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-6 lg:gap-8">
-          {groups.map((group) => (
-            <div key={group.id} className="group">
-              <Link href={group.href} className="block" title={group.label}>
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-white">
-                  <SafeImage
-                    src={group.image}
-                    alt={group.label}
-                    fill
-                    className="object-contain object-center"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-              </Link>
+        <div className="group/carousel relative">
+          <CarouselArrows
+            canGoPrev={canGoPrev}
+            canGoNext={canGoNext}
+            onPrev={goPrev}
+            onNext={goNext}
+            arrowTop={arrowTop}
+            className="opacity-100"
+          />
 
-              <Link
-                href={group.href}
-                className="mt-3 flex items-center gap-3 text-black transition-opacity group-hover:opacity-70"
-                title={group.label}
-              >
-                <span className="shrink-0 text-[13px] font-bold uppercase tracking-wide md:text-[14px]">
-                  {group.label}
-                </span>
-                <span className="h-px flex-1 bg-neutral-300" />
-                <CollectionArrow />
-              </Link>
-            </div>
-          ))}
+          <div ref={containerRef} className="overflow-hidden">
+            <motion.div
+              className="flex"
+              animate={{ x: translateX }}
+              transition={carouselSlide}
+              style={{ gap: `${gap}px` }}
+            >
+              {groups.map((group) => (
+                <div
+                  key={group.id}
+                  className="group shrink-0"
+                  style={{ width: slideWidth || undefined }}
+                >
+                  <Link href={group.href} className="block" title={group.label}>
+                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-white">
+                      <SafeImage
+                        src={group.image}
+                        alt={group.label}
+                        fill
+                        className="object-contain object-center"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                    </div>
+                  </Link>
+
+                  <Link
+                    href={group.href}
+                    className="mt-3 flex items-center gap-3 text-black transition-opacity group-hover:opacity-70"
+                    title={group.label}
+                  >
+                    <span className="shrink-0 text-[13px] font-bold uppercase tracking-wide md:text-[14px]">
+                      {group.label}
+                    </span>
+                    <span className="h-px flex-1 bg-neutral-300" />
+                    <CollectionArrowIcon className="shrink-0" />
+                  </Link>
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

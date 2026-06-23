@@ -29,6 +29,11 @@ export const scaleOnHover = {
   transition: { duration: 0.3, ease: "easeOut" },
 };
 
+export const buttonPress = {
+  whileHover: { scale: 1.02 },
+  whileTap: { scale: 0.98 },
+};
+
 export const slideInFromBottom: Variants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
@@ -85,7 +90,140 @@ export const drawerOverlay: Variants = {
   exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
+export const modalOverlay: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
+};
+
+export const modalPopIn: Variants = {
+  hidden: { opacity: 0, scale: 0.96, y: 12 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.22, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.96,
+    y: 12,
+    transition: { duration: 0.18, ease: "easeIn" },
+  },
+};
+
+export const fadeScale: Variants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.2, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.8,
+    transition: { duration: 0.18, ease: "easeIn" },
+  },
+};
+
 export const carouselSlide = {
   duration: 0.5,
   ease: [0.22, 1, 0.36, 1] as const,
+};
+
+export const crossFade: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
+export const slowCrossFade: Variants = {
+  hidden: {
+    opacity: 0,
+    transition: { duration: 0.7, ease: "easeInOut" },
+  },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.7, ease: "easeInOut" },
+  },
+};
+
+export const heroImageCrossFade: Variants = {
+  hidden: {
+    opacity: 0,
+    transition: { duration: 1, ease: "easeInOut" },
+  },
+  visible: {
+    opacity: 1,
+    transition: { duration: 1, ease: "easeInOut" },
+  },
+};
+
+export const textFade: Variants = {
+  hidden: {
+    opacity: 0.55,
+    transition: { duration: 0.3 },
+  },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.3 },
+  },
+};
+
+export const slideUpFade: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    transition: { duration: 0.5 },
+  },
+};
+
+export const quickFade: Variants = {
+  hidden: {
+    opacity: 0,
+    transition: { duration: 0.2 },
+  },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.2 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.2 },
+  },
+};
+
+export const bottomSheetSlide: Variants = {
+  hidden: { y: "100%" },
+  visible: {
+    y: 0,
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    y: "100%",
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+export const menuDropDown: Variants = {
+  hidden: {
+    opacity: 0,
+    y: -4,
+    transition: { duration: 0.15, ease: "easeOut" },
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.15, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    y: -4,
+    transition: { duration: 0.15, ease: "easeOut" },
+  },
 };

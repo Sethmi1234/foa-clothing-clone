@@ -55,7 +55,7 @@ export default function AccountDetailsPage() {
           </div>
 
           <form className="space-y-2.5" onSubmit={handleSubmit}>
-            <div className="thb-field">
+            <div className="relative">
               <input
                 type="text"
                 id="FirstName"
@@ -65,14 +65,14 @@ export default function AccountDetailsPage() {
                 required
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="thb-field-input"
+                className="relative-input"
               />
-              <label htmlFor="FirstName" className="thb-field-label">
+              <label htmlFor="FirstName" className="relative-label">
                 First name
               </label>
             </div>
 
-            <div className="thb-field">
+            <div className="relative">
               <input
                 type="text"
                 id="LastName"
@@ -82,14 +82,14 @@ export default function AccountDetailsPage() {
                 required
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="thb-field-input"
+                className="relative-input"
               />
-              <label htmlFor="LastName" className="thb-field-label">
+              <label htmlFor="LastName" className="relative-label">
                 Last name
               </label>
             </div>
 
-            <div className="thb-field">
+            <div className="relative">
               <input
                 type="email"
                 id="Email"
@@ -101,14 +101,14 @@ export default function AccountDetailsPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="thb-field-input"
+                className="relative-input"
               />
-              <label htmlFor="Email" className="thb-field-label">
+              <label htmlFor="Email" className="relative-label">
                 Email address
               </label>
             </div>
 
-            <button type="submit" className="thb-button-full mt-2.5">
+            <button type="submit" className="flex h-[52px] w-full items-center justify-center border border-[#151515] bg-[#151515] px-6 py-[0.95rem] text-[0.8125rem] font-semibold uppercase tracking-[0.06em] text-white transition-opacity hover:opacity-85 mt-2.5">
               <span>{saved ? "Saved!" : "Save changes"}</span>
             </button>
           </form>

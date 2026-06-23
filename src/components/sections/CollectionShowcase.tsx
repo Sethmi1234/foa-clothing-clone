@@ -5,6 +5,7 @@ import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { useState } from "react";
 import { collectionShowcase } from "@/data/mockData";
+import { slowCrossFade, textFade } from "@/lib/animations";
 
 export default function CollectionShowcase() {
   const [active, setActive] = useState(0);
@@ -16,8 +17,9 @@ export default function CollectionShowcase() {
         <motion.div
           key={collection.id}
           className="absolute inset-0"
-          animate={{ opacity: index === active ? 1 : 0 }}
-          transition={{ duration: 0.7, ease: "easeInOut" }}
+          variants={slowCrossFade}
+          initial="hidden"
+          animate={index === active ? "visible" : "hidden"}
           style={{ zIndex: index === active ? 2 : 1 }}
           aria-hidden={index !== active}
         >
@@ -43,8 +45,9 @@ export default function CollectionShowcase() {
             className="group"
           >
             <motion.span
-              animate={{ opacity: index === active ? 1 : 0.55 }}
-              transition={{ duration: 0.3 }}
+              variants={textFade}
+              initial="hidden"
+              animate={index === active ? "visible" : "hidden"}
               className={`block text-2xl font-semibold uppercase tracking-wide transition-all md:text-4xl lg:text-5xl ${
                 index === active && collection.outlined
                   ? "text-stroke-white"

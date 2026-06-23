@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { buttonPress } from "@/lib/animations";
 
 type ButtonProps = {
   children: React.ReactNode;
@@ -40,7 +41,7 @@ export default function Button({
 
   if (href) {
     return (
-      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+      <motion.div {...buttonPress}>
         <Link href={href} className={styles}>
           {children}
         </Link>
@@ -50,8 +51,7 @@ export default function Button({
 
   return (
     <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      {...buttonPress}
       onClick={onClick}
       className={styles}
     >

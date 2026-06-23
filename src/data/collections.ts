@@ -1437,4 +1437,34 @@ export const otherCollections: OtherCollectionGroup[] = [
     href: "/collections/footwear",
     image: shopCollectionImage("Footwear_HEADER.png?v=1758626012", 960),
   },
+  {
+    id: "tees",
+    label: "TEES",
+    href: "/collections/tees",
+    image: shopImage("00012501A.jpg?v=1778247075", 960),
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    href: "/collections/jackets",
+    image: shopImage("00012801A.jpg?v=1778250510", 960),
+  },
+  {
+    id: "shorts",
+    label: "SHORTS",
+    href: "/collections/shorts",
+    image: shopImage("00013201A.jpg?v=1778250510", 960),
+  },
+  {
+    id: "tops",
+    label: "TOPS",
+    href: "/collections/tops",
+    image: shopImage("00013801A.jpg?v=1778250510", 960),
+  },
+  {
+    id: "accessories",
+    label: "ACCESSORIES",
+    href: "/collections/accessories",
+    image: "https://cdn.shopify.com/s/files/1/0750/4415/9772/files/Accessories_b0d96e03-2e8e-432e-96ad-b724078cd445.png?v=1759915492",
+  },
 ];

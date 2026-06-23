@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import SafeImage from "@/components/ui/SafeImage";
+import { menuDropDown } from "@/lib/animations";
 import type { TopLevelCategory } from "@/types/navigation";
 
 type MegaMenuProps = {
@@ -25,10 +26,10 @@ export default function MegaMenu({ category, isOpen, forceSolid = false }: MegaM
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -4 }}
-          transition={{ duration: 0.15, ease: "easeOut" }}
+          variants={menuDropDown}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           className={`absolute left-0 right-0 top-full z-50 border-t border-neutral-200 shadow-lg ${
             forceSolid ? "bg-white" : "bg-white/95 backdrop-blur-[1px]"
           }`}

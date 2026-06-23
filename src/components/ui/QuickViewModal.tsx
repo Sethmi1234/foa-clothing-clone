@@ -7,6 +7,7 @@ import { CloseIcon } from "@/components/icons/CloseIcon";
 import WishlistButton from "@/components/wishlist/WishlistButton";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import { useCart } from "@/context/CartContext";
+import { modalOverlay, modalPopIn } from "@/lib/animations";
 import { getDisplayImages } from "@/lib/productImages";
 import type { Product } from "@/types";
 
@@ -37,18 +38,18 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
       {isOpen && (
         <>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            variants={modalOverlay}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="fixed inset-0 z-[100] bg-black/60"
             onClick={onClose}
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
+            variants={modalPopIn}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="fixed inset-0 z-[101] flex items-center justify-center p-4"
           >
             <div
