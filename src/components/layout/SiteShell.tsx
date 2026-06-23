@@ -6,6 +6,7 @@ import FloatingActions from "@/components/layout/FloatingActions";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import MainContent from "@/components/layout/MainContent";
+import PopupModal from "@/components/ui/PopupModal";
 import SearchDrawer from "@/components/search/SearchDrawer";
 import WishlistBar from "@/components/wishlist/WishlistBar";
 
@@ -26,6 +27,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       <CartDrawer />
       <SearchDrawer />
       <WishlistBar />
+      <PopupModal />
     </>
   );
 }
