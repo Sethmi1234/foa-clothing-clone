@@ -20,12 +20,14 @@ export default function PopupSubscribeForm({ onSubmit }: PopupSubscribeFormProps
       </label>
 
       <label className="flex h-[46px] items-center gap-2 rounded-[3px] border border-[#d9d9d9] bg-[#f6f6f6] px-4 text-left focus-within:border-[#111] md:h-[48px]">
-        <span className="text-[11px] font-bold text-[#333]" aria-hidden="true">
-          LK
-        </span>
-        <span className="text-[12px] text-[#333]" aria-hidden="true">
-          v
-        </span>
+        <img
+          src="https://flagcdn.com/w40/lk.png"
+          alt="Sri Lanka flag"
+          width="24"
+          height="16"
+          className="rounded-sm"
+          aria-hidden="true"
+        />
         <span className="text-[14px] text-[#9b9b9b]">+94</span>
         <input
           type="tel"

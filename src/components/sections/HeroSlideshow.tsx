@@ -3,22 +3,68 @@
 import { AnimatePresence, motion } from "framer-motion";
 import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import { heroSlides } from "@/data/mockData";
 import { heroImageCrossFade, heroTextReveal, slideUpFade } from "@/lib/animations";
 
+const SLIDE_DURATION_SECONDS = 7;
+const SLIDE_DURATION_MS = SLIDE_DURATION_SECONDS * 1000;
+
+type HeroProgressDotProps = {
+  index: number;
+  isActive: boolean;
+  onSelect: (index: number) => void;
+};
+
+function HeroProgressDot({ index, isActive, onSelect }: HeroProgressDotProps) {
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(index)}
+      aria-label={`Go to slide ${index + 1}`}
+      aria-current={isActive ? "true" : undefined}
+      className="relative flex h-6 w-6 items-center justify-center rounded-full"
+    >
+      <span className="h-2 w-2 rounded-full bg-white/80 transition-opacity hover:bg-white" />
+      {isActive && (
+        <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 24 24" aria-hidden="true">
+          <circle
+            cx="12"
+            cy="12"
+            r="8"
+            fill="none"
+            stroke="rgba(255,255,255,0.35)"
+            strokeWidth="2"
+          />
+          <motion.circle
+            key={index}
+            cx="12"
+            cy="12"
+            r="8"
+            fill="none"
+            stroke="white"
+            strokeLinecap="round"
+            strokeWidth="2"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: SLIDE_DURATION_SECONDS, ease: "linear" }}
+          />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 export default function HeroSlideshow() {
   const [current, setCurrent] = useState(0);
 
-  const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % heroSlides.length);
-  }, []);
-
   useEffect(() => {
-    const timer = setInterval(next, 7000);
-    return () => clearInterval(timer);
-  }, [next]);
+    const timer = window.setTimeout(() => {
+      setCurrent((prev) => (prev + 1) % heroSlides.length);
+    }, SLIDE_DURATION_MS);
+    return () => window.clearTimeout(timer);
+  }, [current]);
 
   const slide = heroSlides[current];
 
@@ -88,17 +134,13 @@ export default function HeroSlideshow() {
         </AnimatePresence>
       </div>
 
-      {/* Dots navigation */}
-      <div className="absolute bottom-9 left-1/2 z-10 flex -translate-x-1/2 gap-3">
+      <div className="absolute bottom-9 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5">
         {heroSlides.map((_, index) => (
-          <button
+          <HeroProgressDot
             key={index}
-            type="button"
-            onClick={() => setCurrent(index)}
-            aria-label={`Go to slide ${index + 1}`}
-            className={`h-2.5 w-2.5 rounded-full border border-white transition-all ${
-              index === current ? "scale-110 bg-white" : "bg-transparent"
-            }`}
+            index={index}
+            isActive={index === current}
+            onSelect={setCurrent}
           />
         ))}
       </div>

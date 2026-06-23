@@ -1,10 +1,16 @@
-export function StarIcon({ className = "" }: { className?: string }) {
+export function StarIcon({
+  className = "",
+  filled = false,
+}: {
+  className?: string;
+  filled?: boolean;
+}) {
   return (
     <svg
       width="20"
       height="20"
       viewBox="0 0 20 20"
-      fill="none"
+      fill={filled ? "currentColor" : "none"}
       aria-hidden="true"
       className={className}
     >

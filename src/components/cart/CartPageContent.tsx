@@ -38,7 +38,7 @@ export default function CartPageContent() {
 
   return (
     <section className="mx-auto max-w-[900px] px-4 py-10 md:px-8 md:py-[70px]">
-      <h1 className="mb-8 text-[18px] font-normal text-[#151515]">Your cart</h1>
+      <h1 className="mb-8 text-[16px] font-normal text-[#151515]">Your cart</h1>
 
       <div className="overflow-x-auto">
         <table className="w-full min-w-[640px] border-collapse">
@@ -65,7 +65,7 @@ export default function CartPageContent() {
               <td className="hidden pt-8 align-top md:table-cell">
                 <Link
                   href="/collections/all"
-                  className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#151515] underline underline-offset-4"
+                  className="text-[11px] font-medium uppercase tracking-[0.08em] text-[#151515] underline underline-offset-4"
                 >
                   Continue shopping
                 </Link>
@@ -76,7 +76,7 @@ export default function CartPageContent() {
                   onToggle={(event) => setNotesOpen(event.currentTarget.open)}
                   className="mb-4 border-b border-[#e2e2e2]"
                 >
-                  <summary className="cursor-pointer list-none py-3 text-[14px] text-[#151515] [&::-webkit-details-marker]:hidden">
+                  <summary className="cursor-pointer list-none py-3 text-[13px] text-[#151515] [&::-webkit-details-marker]:hidden">
                     Add notes
                   </summary>
                   <div className="pb-4">
@@ -84,7 +84,7 @@ export default function CartPageContent() {
                       id="CartSpecialInstructions"
                       value={orderNote}
                       onChange={(event) => setOrderNote(event.target.value)}
-                      className="min-h-[120px] w-full resize-y border border-[#e2e2e2] px-3 py-3 text-[14px] text-[#151515] outline-none focus:border-[#151515]"
+                      className="min-h-[120px] w-full resize-y border border-[#e2e2e2] px-3 py-3 text-[13px] text-[#151515] outline-none focus:border-[#151515]"
                     />
                   </div>
                 </details>
@@ -100,7 +100,7 @@ export default function CartPageContent() {
                   type="button"
                   onClick={handleCheckout}
                   disabled={!termsAccepted}
-                  className="flex h-[52px] w-full items-center justify-center rounded-full bg-[#151515] text-[12px] font-medium uppercase tracking-[0.12em] text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-[52px] w-full items-center justify-center rounded-full bg-[#151515] text-[11px] font-medium uppercase tracking-[0.12em] text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Checkout <span className="mx-2 font-bold">•</span> {formatCartPrice(subtotal)}
                 </button>
@@ -108,13 +108,13 @@ export default function CartPageContent() {
                 <div className="mt-4 rounded-md border border-[#e2e2e2] bg-[#f7f7f7] px-4 py-3">
                   <button
                     type="button"
-                    className="flex h-[44px] w-full items-center justify-center rounded-md bg-black text-[13px] font-medium text-white"
+                    className="flex h-[44px] w-full items-center justify-center rounded-md bg-black text-[12px] font-medium text-white"
                   >
                     G Pay
                   </button>
                 </div>
 
-                <p className="mt-5 text-center text-[12px] text-neutral-500">
+                <p className="mt-5 text-center text-[11px] text-neutral-500">
                   Taxes and{" "}
                   <Link href="/policies/shipping-policy" className="underline underline-offset-2">
                     shipping
@@ -124,7 +124,7 @@ export default function CartPageContent() {
 
                 <Link
                   href="/collections/all"
-                  className="mt-6 inline-block text-[12px] font-medium uppercase tracking-[0.08em] text-[#151515] underline underline-offset-4 md:hidden"
+                  className="mt-6 inline-block text-[11px] font-medium uppercase tracking-[0.08em] text-[#151515] underline underline-offset-4 md:hidden"
                 >
                   Continue shopping
                 </Link>

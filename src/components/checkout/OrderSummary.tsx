@@ -42,7 +42,7 @@ export default function OrderSummary({
           {items.map((item) => {
             const variantLabel = getVariantLabel(item.color, item.size);
             return (
-              <li key={item.lineId} className="flex gap-4">
+              <li key={item.lineId} className="flex gap-4 items-center">
                 <div className="relative h-[64px] w-[64px] shrink-0 overflow-hidden rounded-[8px] border border-[#dedede] bg-white">
                   <SafeImage
                     src={item.image}
@@ -51,19 +51,19 @@ export default function OrderSummary({
                     sizes="64px"
                     className="object-cover object-center"
                   />
-                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#707070] text-[11px] font-medium text-white">
+                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-[12px] font-medium text-white shadow-sm border border-white">
                     {item.quantity}
                   </span>
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-[14px] font-medium text-[#151515]">{item.name}</p>
                   {variantLabel && (
-                    <p className="mt-1 text-[12px] uppercase tracking-[0.02em] text-neutral-500">
+                    <p className="mt-1 text-[12px] text-neutral-500 uppercase tracking-tight">
                       {variantLabel}
                     </p>
                   )}
                 </div>
-                <p className="text-[14px] font-medium text-[#151515]">
+                <p className="text-[14px] text-[#151515]">
                   {formatCartPrice(item.price * item.quantity)}
                 </p>
               </li>
@@ -80,18 +80,42 @@ export default function OrderSummary({
           </div>
         )}
 
-        <div className="mt-6 space-y-3 border-t border-[#dedede] pt-4 text-[14px]">
+        {/* Gift Card Section */}
+        <div className="mt-6 flex gap-3">
+          <input 
+            type="text" 
+            placeholder="Gift card" 
+            className="flex-1 rounded-[5px] border border-[#dedede] bg-white px-3 py-3 text-[14px] text-black outline-none transition-colors focus:border-[#151515]"
+          />
+          <button 
+            type="button" 
+            className="rounded-[5px] bg-[#f0f0f0] px-4 font-medium text-neutral-600 transition-colors hover:bg-neutral-200"
+          >
+            Apply
+          </button>
+        </div>
+
+        <div className="mt-6 space-y-3 pt-4 text-[14px]">
           <div className="flex items-center justify-between">
             <span className="text-neutral-600">Subtotal · {itemCountLabel}</span>
-            <span>{formatCartPrice(subtotal)}</span>
+            <span className="text-[#151515]">{formatCartPrice(subtotal)}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-neutral-600">Shipping</span>
-            <span>{city ? (shippingCost === 0 ? "Free" : formatCartPrice(shippingCost)) : "-"}</span>
+            <span className="flex items-center gap-1 text-neutral-600">
+              Pickup in store
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="7" cy="7" r="6" stroke="#aaaaaa" strokeWidth="1" />
+                <path d="M7 6.5V10" stroke="#aaaaaa" strokeWidth="1.2" strokeLinecap="round" />
+                <circle cx="7" cy="4.5" r="0.6" fill="#aaaaaa" />
+              </svg>
+            </span>
+            <span className="text-[#151515]">
+              {city ? (shippingCost === 0 ? "FREE" : formatCartPrice(shippingCost)) : "FREE"}
+            </span>
           </div>
-          <div className="flex items-center justify-between border-t border-[#dedede] pt-4 text-[18px] font-semibold">
-            <span>Total</span>
-            <span>
+          <div className="flex items-center justify-between pt-4 text-[16px] font-semibold">
+            <span className="text-[#151515]">Total</span>
+            <span className="text-[#151515]">
               <span className="mr-2 text-[12px] font-normal text-neutral-500">LKR</span>
               {formatCartPrice(total)}
             </span>

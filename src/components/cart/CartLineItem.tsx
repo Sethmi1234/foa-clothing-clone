@@ -30,7 +30,7 @@ export default function CartLineItem({
 
   if (variant === "drawer") {
     return (
-      <div className="grid grid-cols-[104px_minmax(0,1fr)_auto] gap-9 py-0 last:border-b-0 max-sm:grid-cols-[86px_1fr] max-sm:gap-4">
+      <div className="grid grid-cols-[104px_minmax(0,1fr)_auto] gap-9 border-b border-[#e2e2e2] py-6 last:border-b-0 max-sm:grid-cols-[86px_1fr] max-sm:gap-4 max-sm:py-4">
         <div className="relative h-[180px] overflow-hidden bg-white max-sm:h-[132px]">
           <SafeImage src={item.image} alt={item.name} fill sizes="104px" className="object-cover object-center" />
         </div>
@@ -38,12 +38,12 @@ export default function CartLineItem({
         <div className="min-w-0 pt-1">
           <Link
             href={item.href}
-            className="mb-2 block text-[19px] font-semibold uppercase leading-snug text-[#151515] hover:opacity-70 max-sm:text-[14px]"
+            className="mb-2 block text-[16px] font-semibold uppercase leading-snug text-[#151515] hover:opacity-70 max-sm:text-[14px]"
           >
             {item.name}
           </Link>
           {variantLabel && (
-            <p className="mb-4 text-[14px] uppercase tracking-[0.02em] text-neutral-500 max-sm:text-[12px]">{variantLabel}</p>
+            <p className="mb-4 text-[13px] uppercase tracking-[0.02em] text-neutral-500 max-sm:text-[12px]">{variantLabel}</p>
           )}
           <div className="flex items-center gap-3">
             <QuantitySelector
@@ -63,7 +63,7 @@ export default function CartLineItem({
           </div>
         </div>
 
-        <div className="pt-1 text-right text-[18px] font-normal text-[#151515] max-sm:col-span-2 max-sm:pt-0 max-sm:text-left max-sm:text-[14px]">
+        <div className="pt-1 text-right text-[16px] font-normal text-[#151515] max-sm:col-span-2 max-sm:pt-0 max-sm:text-left max-sm:text-[14px]">
           {formatCartPrice(lineTotal)}
         </div>
       </div>

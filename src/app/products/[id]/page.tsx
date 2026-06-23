@@ -5,6 +5,7 @@ import CustomerReviews from "@/components/shared/CustomerReviews";
 import FAQSection from "@/components/shared/FAQSection";
 import YouMayAlsoLike from "@/components/shared/YouMayAlsoLike";
 import { getProductById, getAllProducts, getRelatedProducts } from "@/lib/products";
+import StickyProductCard from "@/components/products/StickyProductCard";
 
 type ProductPageProps = {
   params: Promise<{ id: string }>;
@@ -58,6 +59,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <CustomerReviews />
       <FAQSection />
       <YouMayAlsoLike products={relatedProducts} />
+      
+      <StickyProductCard product={product} />
     </>
   );
 }

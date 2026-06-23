@@ -9,17 +9,17 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function CategoryGrid() {
   return (
-    <section className="bg-white pb-10 pt-2 md:pt-4">
-      <Container fullWidth>
+    <section className="bg-[#f5f5f5] pb-10 pt-2 md:pt-4">
+      <Container>
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 md:gap-2.5"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-8"
         >
           {categoryItems.map((item) => (
-            <motion.div key={item.label} variants={fadeUp}>
+            <motion.div key={item.label} variants={fadeUp} className="border-4 border-white shadow-sm">
               <Link
                 href={item.href}
                 className="group relative block aspect-[4/5] overflow-hidden md:aspect-[3/4]"

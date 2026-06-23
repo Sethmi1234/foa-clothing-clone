@@ -39,7 +39,7 @@ export default function ProductInfo({
     setSelectedSize(null);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (quantity: number = 1) => {
     addItem({
       productId: product.id,
       name: product.name,
@@ -48,7 +48,7 @@ export default function ProductInfo({
       href: product.href,
       size: selectedSize ?? undefined,
       color: colorLabel,
-      quantity: 1,
+      quantity,
     });
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
@@ -80,14 +80,15 @@ export default function ProductInfo({
           onColorChange={handleColorChange}
         />
 
+        <ProductDetails product={product} onOpenSizeChart={() => setShowSizeChart(true)} />
+
         <ProductActions
           product={product}
           activeImage={activeImage}
           addedToCart={addedToCart}
           onAddToCart={handleAddToCart}
+          onOpenSizeChart={() => setShowSizeChart(true)}
         />
-
-        <ProductDetails product={product} />
       </div>
 
       <SizeChartModal isOpen={showSizeChart} onClose={() => setShowSizeChart(false)} />

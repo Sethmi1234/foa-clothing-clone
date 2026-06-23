@@ -124,7 +124,7 @@ export default function CartDrawer() {
 
             <div className="flex min-w-0 flex-1 flex-col bg-white">
               <div className="flex h-[88px] items-center justify-between border-b border-[#e2e2e2] px-9">
-                <h2 className="text-[20px] font-semibold uppercase tracking-[0.16em] text-[#151515]">Cart</h2>
+                <h2 className="text-[18px] font-semibold uppercase tracking-[0.16em] text-[#151515]">Cart</h2>
                 <button
                   type="button"
                   onClick={closeDrawer}
@@ -161,7 +161,7 @@ export default function CartDrawer() {
                       setDraftNote(orderNote);
                       setShowOrderNote(true);
                     }}
-                    className="flex w-full items-center justify-between border-b border-[#e2e2e2] px-9 py-4 text-left text-[19px] text-[#151515]"
+                    className="flex w-full items-center justify-between border-b border-[#e2e2e2] px-9 py-4 text-left text-[16px] text-[#151515]"
                   >
                     Add order note
                     <span className="text-2xl leading-none">+</span>
@@ -183,7 +183,7 @@ export default function CartDrawer() {
                       type="button"
                       onClick={handleCheckout}
                       disabled={!termsAccepted}
-                      className="mb-4 flex h-[60px] w-full items-center justify-center rounded-full bg-[#151515] text-[17px] font-bold uppercase text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="mb-4 flex h-[60px] w-full items-center justify-center rounded-full bg-[#151515] text-[15px] font-bold uppercase text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       Checkout <span className="mx-2 font-bold">•</span> {formatCartPrice(subtotal)}
                     </button>
@@ -191,7 +191,7 @@ export default function CartDrawer() {
                     <Link
                       href="/cart"
                       onClick={closeDrawer}
-                      className="block text-center text-[16px] font-medium uppercase text-[#151515] underline underline-offset-4"
+                      className="block text-center text-[14px] font-medium uppercase text-[#151515] underline underline-offset-4"
                     >
                       View Cart
                     </Link>
