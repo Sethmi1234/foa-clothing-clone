@@ -2,6 +2,7 @@ import Link from "next/link";
 import EVoucherDetails from "@/components/e-voucher/EVoucherDetails";
 import EVoucherGiftCard from "@/components/e-voucher/EVoucherGiftCard";
 import EVoucherStickyBar from "@/components/e-voucher/EVoucherStickyBar";
+import EVoucherBanner from "@/components/e-voucher/EVoucherBanner";
 import CustomerReviews from "@/components/shared/CustomerReviews";
 import FAQSection from "@/components/shared/FAQSection";
 import YouMayAlsoLike from "@/components/shared/YouMayAlsoLike";
@@ -34,6 +35,7 @@ export default function EVoucherPage() {
       <CustomerReviews />
       <FAQSection />
       <YouMayAlsoLike products={relatedProducts} />
+      <EVoucherBanner />
       <EVoucherStickyBar />
     </>
   );

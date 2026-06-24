@@ -96,7 +96,7 @@ foa-clothing-clone/
 │   └── types/                   # TypeScript type definitions
 │       ├── index.ts             # Core types (Product, CartItem, HeroSlide, etc.)
 │       └── navigation.ts        # Navigation types (NavItem, NavColumn, etc.)
-├── add_sizes.js                 # Utility script
+├── add_sizes.ts                 # Utility script
 ├── parse.js                     # Utility script
 ├── ANALYSIS.md                  # UI analysis of target site
 ├── AGENTS.md                    # AI agent instructions
@@ -223,7 +223,7 @@ Uses **Framer Motion** for animations:
 |--------|---------|-------------|
 | `check-images.mjs` | `node scripts/check-images.mjs` | Validate product images on Shopify CDN |
 | `export-bad-images.mjs` | `node scripts/export-bad-images.mjs` | Export list of broken image URLs |
-| `add_sizes.js` | `node add_sizes.js` | Add size arrays to product data |
+| `add_sizes.ts` | `npx tsx add_sizes.ts` | Add size arrays to product data |
 | `parse.js` | `node parse.js` | Parse product data |
 
 ## Image Validation
