@@ -1,19 +1,44 @@
-import type { FormEvent } from "react";
+"use client";
+
+import { useState, type FormEvent } from "react";
 import { EmailIcon } from "@/components/icons/UtilityIcons";
+import { subscribeEmail } from "@/lib/newsletter";
 
 type PopupSubscribeFormProps = {
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onSuccess: () => void;
 };
 
-export default function PopupSubscribeForm({ onSubmit }: PopupSubscribeFormProps) {
+export default function PopupSubscribeForm({ onSuccess }: PopupSubscribeFormProps) {
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    try {
+      await subscribeEmail(email);
+      setStatus("success");
+      setTimeout(() => {
+        onSuccess();
+      }, 1500);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
+  };
+
   return (
-    <form onSubmit={onSubmit} className="mx-auto flex max-w-[390px] flex-col gap-4">
+    <form onSubmit={handleSubmit} className="mx-auto flex max-w-[390px] flex-col gap-4">
       <label className="flex h-[46px] items-center gap-3 rounded-[3px] border border-[#d9d9d9] bg-[#f6f6f6] px-4 text-left focus-within:border-[#111] md:h-[48px]">
         <EmailIcon className="text-[#5f5f5f]" />
         <input
           type="email"
           required
           placeholder="Email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="h-full min-w-0 flex-1 bg-transparent text-[14px] text-[#222] outline-none placeholder:text-[#9b9b9b]"
           aria-label="Email address"
         />
@@ -32,6 +57,8 @@ export default function PopupSubscribeForm({ onSubmit }: PopupSubscribeFormProps
         <input
           type="tel"
           placeholder="Phone Number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           className="h-full min-w-0 flex-1 bg-transparent text-[14px] text-[#222] outline-none placeholder:text-[#9b9b9b]"
           aria-label="Phone number"
         />
@@ -39,9 +66,10 @@ export default function PopupSubscribeForm({ onSubmit }: PopupSubscribeFormProps
 
       <button
         type="submit"
-        className="mt-3 h-[54px] rounded-[4px] bg-black text-[14px] font-bold uppercase tracking-normal text-white transition-opacity hover:opacity-85"
+        disabled={status === "loading"}
+        className="mt-3 h-[54px] rounded-[4px] bg-black text-[14px] font-bold uppercase tracking-normal text-white transition-opacity hover:opacity-85 disabled:opacity-50"
       >
-        Subscribe
+        {status === "loading" ? "Subscribing..." : status === "success" ? "Subscribed!" : status === "error" ? "Failed. Try again" : "Subscribe"}
       </button>
     </form>
   );

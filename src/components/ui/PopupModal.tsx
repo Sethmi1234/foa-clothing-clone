@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import type { FormEvent } from "react";
 import { useEffect, useState } from "react";
 import PopupContent from "@/components/ui/popup/PopupContent";
 import { modalOverlay, modalPopIn } from "@/lib/animations";
@@ -43,11 +42,6 @@ export default function PopupModal() {
     document.body.style.overflow = "";
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    handleClose();
-  };
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -80,7 +74,7 @@ export default function PopupModal() {
               x
             </button>
 
-            <PopupContent onSubmit={handleSubmit} />
+            <PopupContent onSuccess={handleClose} />
           </motion.div>
         </motion.div>
       )}

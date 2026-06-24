@@ -1,14 +1,13 @@
-import type { FormEvent } from "react";
 import PopupSubscribeForm from "@/components/ui/popup/PopupSubscribeForm";
 
 const popupImageUrl =
   "https://uc.pop-convert.com/ae9cb82c-03f9-411a-a285-83f3ebb742e6/";
 
 type PopupContentProps = {
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onSuccess: () => void;
 };
 
-export default function PopupContent({ onSubmit }: PopupContentProps) {
+export default function PopupContent({ onSuccess }: PopupContentProps) {
   return (
     <div className="flex w-full flex-col overflow-hidden md:min-h-[520px] md:flex-row">
       <div className="flex flex-1 items-center justify-center bg-white px-5 py-6 md:px-6 md:py-7">
@@ -30,7 +29,7 @@ export default function PopupContent({ onSubmit }: PopupContentProps) {
 
           <div className="mb-11 h-px w-full bg-[#bdbdbd]" />
 
-          <PopupSubscribeForm onSubmit={onSubmit} />
+          <PopupSubscribeForm onSuccess={onSuccess} />
         </div>
       </div>
 

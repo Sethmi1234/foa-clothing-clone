@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
+import { subscribeEmail } from "@/lib/newsletter";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -20,7 +21,7 @@ import {
   UnionPayIcon,
   VisaIcon,
 } from "@/components/icons/PaymentIcons";
-import { NewsletterArrowIcon } from "@/components/icons/UtilityIcons";
+import { NewsletterArrowIcon, EmailIcon } from "@/components/icons/UtilityIcons";
 import { footerData } from "@/data/mockData";
 
 const socialIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -90,6 +91,24 @@ function FooterMenu({
 }
 
 export default function Footer() {
+  const [footerEmail, setFooterEmail] = useState("");
+  const [footerStatus, setFooterStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleFooterSubscribe = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!footerEmail) return;
+    setFooterStatus("loading");
+    try {
+      await subscribeEmail(footerEmail);
+      setFooterStatus("success");
+      setFooterEmail("");
+      setTimeout(() => setFooterStatus("idle"), 4000);
+    } catch {
+      setFooterStatus("error");
+      setTimeout(() => setFooterStatus("idle"), 4000);
+    }
+  };
+
   return (
     <footer className="bg-[#151515] text-[15px] text-white" id="footer">
       <div className="mx-auto max-w-[1440px] px-6 py-[45px] md:px-10 md:py-[65px]">
@@ -115,7 +134,7 @@ export default function Footer() {
                 Be the first to know about our new collections and promotions
               </p>
               <div className="">
-                <form className="relative">
+                <form className="relative" onSubmit={handleFooterSubscribe}>
                   <fieldset className="relative border-0 p-0">
                     <div className="relative relative">
                       <input
@@ -125,6 +144,8 @@ export default function Footer() {
                         placeholder=" "
                         required
                         autoComplete="email"
+                        value={footerEmail}
+                        onChange={(e) => setFooterEmail(e.target.value)}
                         className="peer w-full border border-[#444] bg-transparent px-4 py-[1.125rem] pb-[0.625rem] pr-10 text-[0.9375rem] leading-[1.4] text-white outline-none transition-colors focus:border-white placeholder:text-transparent"
                         aria-label="Email address"
                       />
@@ -143,6 +164,12 @@ export default function Footer() {
                       </button>
                     </div>
                   </fieldset>
+                  {footerStatus === "success" && (
+                    <p className="mt-2 text-[13px] text-green-400">Subscribed successfully!</p>
+                  )}
+                  {footerStatus === "error" && (
+                    <p className="mt-2 text-[13px] text-red-400">Failed to subscribe. Try again.</p>
+                  )}
                 </form>
               </div>
             </div>
